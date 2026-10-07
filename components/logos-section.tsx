@@ -7,8 +7,8 @@ export function LogosSection({ dict }: { dict: Dictionary }) {
 	return (
 		<section className="mb-12">
 			<h2 className="py-6 text-center font-medium text-lg text-muted-foreground tracking-tight md:text-xl">
-				{dict.logos.trustedBy}{" "}
-				<span className="text-foreground">{dict.logos.experts}</span>
+				{dict.logos.supporting}{" "}
+				<span className="text-foreground">{dict.logos.highlight}</span>
 			</h2>
 			<div className="relative *:border-0">
 				<DecorIcon className="size-4" position="top-left" />

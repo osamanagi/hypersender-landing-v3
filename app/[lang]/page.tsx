@@ -22,7 +22,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
 					"after:absolute after:-inset-y-14 after:-right-px after:w-px after:bg-border"
 				)}
 			>
-				<HeroSection dict={dict} />
+				<HeroSection dict={dict} locale={lang} />
 				<LogosSection dict={dict} />
 			</main>
 		</div>

@@ -43,7 +43,13 @@ export function MobileNav({ dict }: { dict: Dictionary }) {
 								<Button
 									className="justify-start"
 									key={link.key}
-									render={<a href={link.href} />}
+									render={
+										<a
+											href={link.href}
+											rel={link.external ? "noreferrer noopener" : undefined}
+											target={link.external ? "_blank" : undefined}
+										/>
+									}
 									nativeButton={false}
 									variant="ghost"
 								>

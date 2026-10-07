@@ -11,9 +11,10 @@ import type { Dictionary, Locale } from "@/i18n-config";
 import Link from "next/link";
 
 export const navLinks = [
-	{ key: "features", href: "#" },
-	{ key: "pricing", href: "#" },
-	{ key: "about", href: "#" },
+	{ key: "features", href: "#features", external: false },
+	{ key: "sdk", href: "#laravel-sdk", external: false },
+	{ key: "pricing", href: "#pricing", external: false },
+	{ key: "docs", href: "https://docs.hypersender.com", external: true },
 ] as const;
 
 export function Header({ dict, locale }: { dict: Dictionary; locale: Locale }) {
@@ -51,7 +52,13 @@ export function Header({ dict, locale }: { dict: Dictionary; locale: Locale }) {
 						{navLinks.map((link) => (
 							<Button
 								key={link.key}
-								render={<a href={link.href} />}
+								render={
+									<a
+										href={link.href}
+										rel={link.external ? "noreferrer noopener" : undefined}
+										target={link.external ? "_blank" : undefined}
+									/>
+								}
 								nativeButton={false}
 								size="sm"
 								variant="ghost"

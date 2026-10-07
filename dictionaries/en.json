@@ -1,30 +1,32 @@
 {
 	"brand": "Hypersender",
 	"metadata": {
-		"title": "Hypersender — Building Digital Experiences That Drive Growth",
-		"description": "We help brands scale faster through design, development and strategic execution."
+		"title": "Hypersender: WhatsApp and SMS APIs",
+		"description": "Hypersender is a powerful API for sending WhatsApp and SMS messages. It is designed to be simple and easy to use, with a focus on security and reliability."
 	},
 	"header": {
 		"nav": {
 			"features": "Features",
+			"sdk": "Laravel SDK",
 			"pricing": "Pricing",
-			"about": "About"
+			"docs": "Docs"
 		},
 		"signIn": "Sign In",
 		"getStarted": "Get Started",
 		"openMenu": "Open menu"
 	},
 	"hero": {
-		"badge": "NOW",
-		"badgeText": "accepting new client projects",
-		"title": "Building Digital Experiences That Drive Growth",
-		"description": "We help brands scale faster through design, development and strategic execution.",
-		"bookCall": "Book a Call",
-		"getStarted": "Get started"
+		"badge": "NEW",
+		"badgeText": "OTP verification via WhatsApp & SMS",
+		"title": "We provide WhatsApp and SMS API",
+		"titleEnd": "for Your Business",
+		"description": "Engage with your customers without the high costs and limitations of Paid WhatsApp Business API and traditional SMS providers.",
+		"features": "Features",
+		"getStarted": "Get Started"
 	},
 	"logos": {
-		"trustedBy": "Trusted by",
-		"experts": "experts"
+		"supporting": "Supporting your favorite",
+		"highlight": "tools and frameworks"
 	},
 	"theme": {
 		"label": "Change theme",

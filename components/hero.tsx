@@ -2,10 +2,16 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { DecorIcon } from "@/components/decor-icon";
 import { FullWidthDivider } from "@/components/full-width-divider";
-import { ArrowRightIcon, PhoneCallIcon } from "lucide-react";
-import type { Dictionary } from "@/i18n-config";
+import { ArrowRightIcon } from "lucide-react";
+import type { Dictionary, Locale } from "@/i18n-config";
 
-export function HeroSection({ dict }: { dict: Dictionary }) {
+export function HeroSection({
+	dict,
+	locale,
+}: {
+	dict: Dictionary;
+	locale: Locale;
+}) {
 	return (
 		<section>
 			<div className="relative flex flex-col items-center justify-center gap-5 px-4 py-12 md:px-4 md:py-24 lg:py-28">
@@ -52,6 +58,8 @@ export function HeroSection({ dict }: { dict: Dictionary }) {
 					)}
 				>
 					{dict.hero.title}
+					<br className="hidden sm:block" />
+					{dict.hero.titleEnd}
 				</h1>
 
 				<p
@@ -64,9 +72,7 @@ export function HeroSection({ dict }: { dict: Dictionary }) {
 				</p>
 
 				<div className="fade-in slide-in-from-bottom-10 flex w-fit animate-in items-center justify-center gap-3 fill-mode-backwards pt-2 delay-300 duration-500 ease-out">
-					<Button variant="outline">
-						<PhoneCallIcon data-icon="inline-start" /> {dict.hero.bookCall}
-					</Button>
+					<Button variant="outline">{dict.hero.features}</Button>
 					<Button>
 						{dict.hero.getStarted}{" "}
 						<ArrowRightIcon className="rtl:rotate-180" data-icon="inline-end" />
@@ -80,20 +86,20 @@ export function HeroSection({ dict }: { dict: Dictionary }) {
 				<DecorIcon className="size-4" position="bottom-right" />
 
 				<FullWidthDivider className="-top-px" />
-				<div className="overflow-hidden *:pointer-events-none *:aspect-video *:select-none">
+				<div className="overflow-hidden *:pointer-events-none *:select-none">
 					<img
-						alt="light app screen"
+						alt="Hypersender dashboard"
 						className="dark:hidden"
-						height="auto"
-						src="https://storage.efferd.com/screen/dashboard-light.webp"
-						width="auto"
+						height={1602}
+						src={`/Images/hypersender-dashboard-${locale}-light.png`}
+						width={2910}
 					/>
 					<img
-						alt="dark app screen"
+						alt="Hypersender dashboard"
 						className="hidden dark:block"
-						height="auto"
-						src="https://storage.efferd.com/screen/dashboard-dark.webp"
-						width="auto"
+						height={1602}
+						src={`/Images/hypersender-dashboard-${locale}-dark.png`}
+						width={2910}
 					/>
 				</div>
 				<FullWidthDivider className="-bottom-px" />
