@@ -12,26 +12,29 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useMounted } from "@/hooks/use-mounted";
-
-const themeOptions = [
-	{ value: "light", label: "Light" },
-	{ value: "dark", label: "Dark" },
-	{ value: "system", label: "System" },
-] as const;
+import type { Dictionary } from "@/i18n-config";
 
 export function ThemeToggle({
+	labels,
 	size = "icon-sm",
 }: {
+	labels: Dictionary["theme"];
 	size?: VariantProps<typeof buttonVariants>["size"];
 }) {
 	const mounted = useMounted();
 	const { theme, resolvedTheme, setTheme } = useTheme();
 
+	const options = [
+		{ value: "light", label: labels.light },
+		{ value: "dark", label: labels.dark },
+		{ value: "system", label: labels.system },
+	] as const;
+
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger
 				render={
-					<Button aria-label="Change theme" size={size} variant="ghost" />
+					<Button aria-label={labels.label} size={size} variant="ghost" />
 				}
 			>
 				{mounted && resolvedTheme === "dark" ? <MoonIcon /> : <SunIcon />}
@@ -41,7 +44,7 @@ export function ThemeToggle({
 					onValueChange={(value) => setTheme(value as string)}
 					value={mounted ? theme : undefined}
 				>
-					{themeOptions.map((option) => (
+					{options.map((option) => (
 						<DropdownMenuRadioItem key={option.value} value={option.value}>
 							{option.label}
 						</DropdownMenuRadioItem>

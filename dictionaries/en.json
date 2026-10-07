@@ -1,0 +1,37 @@
+{
+	"metadata": {
+		"title": "Hypersender — Building Digital Experiences That Drive Growth",
+		"description": "We help brands scale faster through design, development and strategic execution."
+	},
+	"header": {
+		"nav": {
+			"features": "Features",
+			"pricing": "Pricing",
+			"about": "About"
+		},
+		"signIn": "Sign In",
+		"getStarted": "Get Started",
+		"openMenu": "Open menu"
+	},
+	"hero": {
+		"badge": "NOW",
+		"badgeText": "accepting new client projects",
+		"title": "Building Digital Experiences That Drive Growth",
+		"description": "We help brands scale faster through design, development and strategic execution.",
+		"bookCall": "Book a Call",
+		"getStarted": "Get started"
+	},
+	"logos": {
+		"trustedBy": "Trusted by",
+		"experts": "experts"
+	},
+	"theme": {
+		"label": "Change theme",
+		"light": "Light",
+		"dark": "Dark",
+		"system": "System"
+	},
+	"locale": {
+		"label": "Change language"
+	}
+}

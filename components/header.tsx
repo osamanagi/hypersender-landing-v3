@@ -1,27 +1,22 @@
 "use client";
+
 import { cn } from "@/lib/utils";
 import { Logo } from "@/components/logo";
 import { useScroll } from "@/hooks/use-scroll";
 import { Button } from "@/components/ui/button";
 import { MobileNav } from "@/components/mobile-nav";
+import { LocaleSwitcher } from "@/components/locale-switcher";
 import { ThemeToggle } from "@/components/theme-toggle";
+import type { Dictionary, Locale } from "@/i18n-config";
+import Link from "next/link";
 
 export const navLinks = [
-	{
-		label: "Features",
-		href: "#",
-	},
-	{
-		label: "Pricing",
-		href: "#",
-	},
-	{
-		label: "About",
-		href: "#",
-	},
-];
+	{ key: "features", href: "#" },
+	{ key: "pricing", href: "#" },
+	{ key: "about", href: "#" },
+] as const;
 
-export function Header() {
+export function Header({ dict, locale }: { dict: Dictionary; locale: Locale }) {
 	const scrolled = useScroll(10);
 
 	return (
@@ -42,27 +37,41 @@ export function Header() {
 					}
 				)}
 			>
-				<a
+				<Link
 					className="rounded-md p-2 hover:bg-muted dark:hover:bg-muted/50"
-					href="#"
+					href={`/${locale}`}
 				>
 					<Logo className="h-4" />
-				</a>
+				</Link>
 				<div className="hidden items-center gap-2 md:flex">
 					<div>
 						{navLinks.map((link) => (
-							<Button key={link.label} size="sm" variant="ghost" render={<a href={link.href} />} nativeButton={false}>{link.label}</Button>
+							<Button
+								key={link.key}
+								render={<a href={link.href} />}
+								nativeButton={false}
+								size="sm"
+								variant="ghost"
+							>
+								{dict.header.nav[link.key]}
+							</Button>
 						))}
 					</div>
-					<ThemeToggle />
+					<LocaleSwitcher label={dict.locale.label} locale={locale} />
+					<ThemeToggle labels={dict.theme} />
 					<Button size="sm" variant="outline">
-						Sign In
+						{dict.header.signIn}
 					</Button>
-					<Button size="sm">Get Started</Button>
+					<Button size="sm">{dict.header.getStarted}</Button>
 				</div>
 				<div className="flex items-center gap-2 md:hidden">
-					<ThemeToggle size="icon" />
-					<MobileNav />
+					<LocaleSwitcher
+						label={dict.locale.label}
+						locale={locale}
+						size="icon"
+					/>
+					<ThemeToggle labels={dict.theme} size="icon" />
+					<MobileNav dict={dict} />
 				</div>
 			</nav>
 		</header>

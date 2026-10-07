@@ -1,11 +1,14 @@
-import { cn } from "@/lib/utils";
+"use client";
+
 import React from "react";
+import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Portal, PortalBackdrop } from "@/components/portal";
 import { navLinks } from "@/components/header";
 import { XIcon, MenuIcon } from "lucide-react";
+import type { Dictionary } from "@/i18n-config";
 
-export function MobileNav() {
+export function MobileNav({ dict }: { dict: Dictionary }) {
 	const [open, setOpen] = React.useState(false);
 
 	return (
@@ -13,7 +16,7 @@ export function MobileNav() {
 			<Button
 				aria-controls="mobile-menu"
 				aria-expanded={open}
-				aria-label="Toggle menu"
+				aria-label={dict.header.openMenu}
 				className="md:hidden"
 				onClick={() => setOpen(!open)}
 				size="icon"
@@ -37,14 +40,22 @@ export function MobileNav() {
 					>
 						<div className="grid gap-y-2">
 							{navLinks.map((link) => (
-								<Button className="justify-start" key={link.label} variant="ghost" render={<a href={link.href} />} nativeButton={false}>{link.label}</Button>
+								<Button
+									className="justify-start"
+									key={link.key}
+									render={<a href={link.href} />}
+									nativeButton={false}
+									variant="ghost"
+								>
+									{dict.header.nav[link.key]}
+								</Button>
 							))}
 						</div>
 						<div className="mt-12 flex flex-col gap-2">
 							<Button className="w-full" variant="outline">
-								Sign In
+								{dict.header.signIn}
 							</Button>
-							<Button className="w-full">Get Started</Button>
+							<Button className="w-full">{dict.header.getStarted}</Button>
 						</div>
 					</div>
 				</Portal>
