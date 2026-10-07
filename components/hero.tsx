@@ -17,8 +17,8 @@ export function HeroSection({ dict }: { dict: Dictionary }) {
 					<div
 						className={cn(
 							"absolute -inset-x-20 inset-y-0 z-0 rounded-full",
-							"bg-[radial-gradient(ellipse_at_center,theme(--color-foreground/.1),transparent,transparent)]",
-							"blur-[50px]"
+							"bg-[radial-gradient(ellipse_at_center,theme(--color-emerald-600/.4),transparent,transparent)]",
+							"blur-[10px]"
 						)}
 					/>
 					<div className="absolute inset-y-0 left-4 w-px bg-linear-to-b from-transparent via-border to-border md:left-8" />
