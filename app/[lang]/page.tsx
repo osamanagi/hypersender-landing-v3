@@ -6,6 +6,7 @@ import { getDictionary, hasLocale } from "@/get-dictionary";
 import { cn } from "@/lib/utils";
 import { FeatureSection } from "@/components/feature-section";
 import { SecondaryFeatureSection } from "@/components/secondary-feature-section";
+import { PricingSection } from "@/components/pricing-section";
 
 export default async function Home({ params }: PageProps<"/[lang]">) {
 	const { lang } = await params;
@@ -28,6 +29,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
 				<LogosSection dict={dict} />
 				<FeatureSection dict={dict} />
 				<SecondaryFeatureSection dict={dict} />
+				<PricingSection dict={dict} />
 			</main>
 		</div>
 	);

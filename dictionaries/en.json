@@ -72,6 +72,193 @@
 			}
 		}
 	},
+	"pricing": {
+		"title": "Plans that Scale with You",
+		"subtitle": "Whether you're just starting out or growing fast, our flexible pricing has you covered — with no hidden costs.",
+		"whatsapp": "WhatsApp",
+		"sms": "SMS",
+		"monthly": "Monthly",
+		"yearly": "Yearly",
+		"perMonth": "/month",
+		"billedMonthly": "billed monthly",
+		"billedYearly": "billed yearly",
+		"popular": "Popular",
+		"discount": "{percent}% off",
+		"plans": {
+			"whatsapp": {
+				"free": {
+					"name": "Free Plan",
+					"info": "Test sending and receiving messages using 1 WhatsApp number for 2 weeks",
+					"priceLabel": "Free",
+					"cta": "Start Free Trial",
+					"features": [
+						"1 Instance",
+						"Sending limit of 100 message/day",
+						"Receive limit of 100 message/day",
+						"community support",
+						"Requests rate-limited at 10 requests/minute",
+						"Send 10 messages per minute",
+						"Send files, images, and videos from urls",
+						"100 MB of cloud storage",
+						"24-hour support response time",
+						"Bulk Sending"
+					]
+				},
+				"starter": {
+					"name": "Starter Plan",
+					"info": "Best plan to get started, send and receive WhatsApp messages via single phone number.",
+					"cta": "Buy Now",
+					"features": [
+						"1 Instance",
+						"Send unlimited WhatsApp messages",
+						"Receive unlimited WhatsApp messages",
+						"3 custom webhooks urls per instance",
+						"Requests rate-limited at 60 requests/minute",
+						"Send 60 messages per minute",
+						"Send files, images, and videos from urls",
+						"1 GB of cloud storage",
+						"24-hour support response time",
+						"Bulk Sending"
+					]
+				},
+				"pro": {
+					"name": "Pro Plan",
+					"info": "Send messages from different phone numbers simultaneously by controlling multiple instances with this plan.",
+					"cta": "Buy Now",
+					"features": [
+						"3 Instances",
+						"Send unlimited WhatsApp messages",
+						"Receive unlimited WhatsApp messages",
+						"3 custom webhooks urls per instance",
+						"Requests rate-limited at 100 requests/minute",
+						"Send 100 messages per minute",
+						"Send files, images, and videos from urls",
+						"5 GB of cloud storage",
+						"24-hour support response time",
+						"Bulk Sending"
+					]
+				},
+				"business": {
+					"name": "Business Plan",
+					"info": "This Plan is perfect for medium to large operations needing multiple WhatsApp numbers.",
+					"cta": "Buy Now",
+					"features": [
+						"5 Instance",
+						"Send unlimited WhatsApp messages",
+						"Receive unlimited WhatsApp messages",
+						"3 custom webhooks urls per instance",
+						"Requests rate-limited at 500 requests/minute",
+						"Send 60 messages per minute",
+						"Send files, images, and videos from urls",
+						"10 GB of cloud storage",
+						"24-hour support response time",
+						"Bulk Sending"
+					]
+				},
+				"enterprise": {
+					"name": "Enterprise Plan",
+					"info": "Built for organizations operating at scale with strict performance, reliability, and security needs. Ideal when you need to manage many WhatsApp numbers, integrate deeply with your stack, and get priority support.",
+					"priceLabel": "Custom",
+					"cta": "Talk to Sales",
+					"features": [
+						"For 10 Instances or more",
+						"Send unlimited WhatsApp messages",
+						"Receive unlimited WhatsApp messages",
+						"50 custom webhooks urls per instance",
+						"Requests rate-limited at > 1000 requests/minute",
+						"Send > 1000 messages per minute",
+						"50 GB of cloud storage",
+						"Instance premium support",
+						"Create and manage instances via API",
+						"Priority support: 30 min response commitment for critical incidents",
+						"Bulk Sending"
+					]
+				}
+			},
+			"sms": {
+				"free": {
+					"name": "Free Plan",
+					"info": "Test sending and receiving messages using 1 phone number (SMS App) for 4 weeks",
+					"priceLabel": "Free",
+					"cta": "Start Free Trial",
+					"features": [
+						"1 Instance",
+						"Sending limit of 100 message/day",
+						"Receive limit of 100 message/day",
+						"community support",
+						"Requests rate-limited at 10 requests/minute",
+						"Send 10 messages per minute",
+						"24-hour support response time",
+						"Bulk Sending"
+					]
+				},
+				"starter": {
+					"name": "Starter Plan",
+					"info": "Best plan to get started, send and receive SMS messages via single phone number.",
+					"cta": "Buy Now",
+					"features": [
+						"1 Instance",
+						"Send unlimited SMS messages",
+						"Receive unlimited SMS messages",
+						"3 custom webhooks urls per instance",
+						"Requests rate-limited at 60 requests/minute",
+						"Send 60 messages per minute",
+						"24-hour support response time",
+						"Bulk Sending"
+					]
+				},
+				"pro": {
+					"name": "Pro Plan",
+					"info": "Send messages from different phone numbers simultaneously by controlling multiple phone numbers (SMS App) with this plan.",
+					"cta": "Buy Now",
+					"features": [
+						"3 Instances",
+						"Send unlimited SMS messages",
+						"Receive unlimited SMS messages",
+						"3 custom webhooks urls per instance",
+						"Requests rate-limited at 100 requests/minute",
+						"Send 100 messages per minute",
+						"24-hour support response time",
+						"Bulk Sending"
+					]
+				},
+				"business": {
+					"name": "Business Plan",
+					"info": "This Plan is perfect for medium to large operations needing multiple SMS phone numbers.",
+					"cta": "Buy Now",
+					"features": [
+						"5 Instances",
+						"Send unlimited SMS messages",
+						"Receive unlimited SMS messages",
+						"3 custom webhooks urls per instance",
+						"Requests rate-limited at 500 requests/minute",
+						"Send 500 messages per minute",
+						"24-hour support response time",
+						"Bulk Sending"
+					]
+				},
+				"enterprise": {
+					"name": "Enterprise Plan",
+					"info": "Built for organizations operating at scale with strict performance, reliability, and security needs. Ideal when you need to manage many SMS phone numbers, integrate deeply with your stack, and get priority support.",
+					"priceLabel": "Custom",
+					"cta": "Talk to Sales",
+					"features": [
+						"For 10 Instances or more",
+						"Send unlimited SMS messages",
+						"Receive unlimited SMS messages",
+						"50 custom webhooks urls per instance",
+						"Requests rate-limited at > 1000 requests/minute",
+						"Send > 1000 messages per minute",
+						"50 GB of cloud storage",
+						"Instance premium support",
+						"Create and manage instances via API",
+						"Priority support: 30 min response commitment for critical incidents",
+						"Bulk Sending"
+					]
+				}
+			}
+		}
+	},
 	"theme": {
 		"label": "Change theme",
 		"light": "Light",
