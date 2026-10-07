@@ -59,7 +59,7 @@ export function FeatureSection({ dict }: { dict: Dictionary }) {
 	);
 
 	return (
-		<div className="mx-auto w-full max-w-7xl place-content-center space-y-12 border-x py-4">
+		<div className="mx-auto w-full max-w-7xl place-content-center space-y-12">
 			<div className="mx-auto max-w-2xl space-y-2 text-center px-4">
 				<h2 className="font-medium text-3xl tracking-tight md:text-5xl">{dict.features.title}</h2>
 				<p className="text-muted-foreground text-sm leading-relaxed md:text-base">{dict.features.subtitle}</p>
