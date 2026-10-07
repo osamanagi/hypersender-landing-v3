@@ -4,6 +4,7 @@ import { HeroSection } from "@/components/hero";
 import { LogosSection } from "@/components/logos-section";
 import { getDictionary, hasLocale } from "@/get-dictionary";
 import { cn } from "@/lib/utils";
+import { FeatureSection } from "@/components/feature-section";
 
 export default async function Home({ params }: PageProps<"/[lang]">) {
 	const { lang } = await params;
@@ -24,6 +25,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
 			>
 				<HeroSection dict={dict} locale={lang} />
 				<LogosSection dict={dict} />
+				<FeatureSection dict={dict} />
 			</main>
 		</div>
 	);

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Inter } from "next/font/google";
+import { Geist, Geist_Mono, Inter, Tajawal } from "next/font/google";
 import { notFound } from "next/navigation";
 import "../globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -8,6 +8,13 @@ import { i18n } from "@/i18n-config";
 import { cn } from "@/lib/utils";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
+
+// Arabic UI type. Tajawal is a static family (no 600), so 600 maps to 700.
+const tajawal = Tajawal({
+	subsets: ["arabic", "latin"],
+	variable: "--font-tajawal",
+	weight: ["400", "500", "700"],
+});
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
@@ -57,8 +64,8 @@ export default async function RootLayout({
 				"antialiased",
 				geistSans.variable,
 				geistMono.variable,
-				"font-sans",
-				inter.variable
+				inter.variable,
+				lang === "ar" ? tajawal.variable : "font-sans"
 			)}
 			dir={i18n.dir[lang]}
 			lang={lang}

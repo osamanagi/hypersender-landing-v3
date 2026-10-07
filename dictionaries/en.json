@@ -28,6 +28,28 @@
 		"supporting": "Supporting your favorite",
 		"highlight": "tools and frameworks"
 	},
+	"features": {
+		"title": "Hypersender is a Developer-friendly API for integrations",
+		"subtitle": "The multifunctional API for WhatsApp and SMS, ideal for businesses and developers. It seamlessly integrates with any accounting system, CRM, ERP, or website for messaging, user notifications, and beyond.",
+		"tabs": {
+			"whatsapp": {
+				"title": "WhatsApp API",
+				"description": "Send and receive messages, images, videos, and documents using the WhatsApp API. Our API is designed to be simple and easy to use."
+			},
+			"sms": {
+				"title": "SMS API",
+				"description": "Send and receive SMS messages using our powerful SMS API. Works with all carriers on your own phone number."
+			},
+			"otpRequest": {
+				"title": "Request OTP Code",
+				"description": "Send OTPs over WhatsApp or SMS with configurable length, charset, TTL, and sender name."
+			},
+			"otpLink": {
+				"title": "Generate OTP Link",
+				"description": "Generate WhatsApp links with callbacks for success or failure to power seamless login flows."
+			}
+		}
+	},
 	"theme": {
 		"label": "Change theme",
 		"light": "Light",
