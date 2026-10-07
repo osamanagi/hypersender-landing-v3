@@ -22,7 +22,7 @@ export function Header({ dict, locale }: { dict: Dictionary; locale: Locale }) {
 	return (
 		<header
 			className={cn(
-				"sticky top-0 z-50 mx-auto w-full max-w-7xl border-transparent border-b md:rounded-md md:border md:transition-all md:ease-out",
+				"sticky top-2 z-50 mx-auto w-full max-w-7xl border-transparent border-b md:rounded-md md:border md:transition-all md:ease-out",
 				{
 					"border-border bg-background/95 backdrop-blur-sm supports-backdrop-filter:bg-background/50 md:top-2 md:max-w-6xl md:shadow":
 						scrolled,
@@ -38,10 +38,13 @@ export function Header({ dict, locale }: { dict: Dictionary; locale: Locale }) {
 				)}
 			>
 				<Link
-					className="rounded-md p-2 hover:bg-muted dark:hover:bg-muted/50"
+					className="flex shrink-0 items-center gap-2 rounded-md p-2 hover:bg-muted dark:hover:bg-muted/50"
 					href={`/${locale}`}
 				>
-					<Logo className="h-4" />
+					<Logo className="size-10 shrink-0" />
+					<span className="font-bold text-xl text-foreground tracking-tight">
+						{dict.brand}
+					</span>
 				</Link>
 				<div className="hidden items-center gap-2 md:flex">
 					<div>
