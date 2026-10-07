@@ -61,45 +61,26 @@ export function FeatureSection({ dict }: { dict: Dictionary }) {
 	return (
 		<div className="mx-auto w-full max-w-7xl place-content-center space-y-12 border-x py-4">
 			<div className="mx-auto max-w-2xl space-y-2 text-center px-4">
-				<h2 className="font-medium text-3xl tracking-tight md:text-5xl">
-					{dict.features.title}
-				</h2>
-				<p className="text-muted-foreground text-sm leading-relaxed md:text-base">
-					{dict.features.subtitle}
-				</p>
+				<h2 className="font-medium text-3xl tracking-tight md:text-5xl">{dict.features.title}</h2>
+				<p className="text-muted-foreground text-sm leading-relaxed md:text-base">{dict.features.subtitle}</p>
 			</div>
 
-			<Tabs
-				className="gap-0"
-				defaultValue={featureTabs[0].id}
-				onValueChange={(value) =>
-					setMountedTabs((previous) =>
-						previous.has(value as FeatureId)
-							? previous
-							: new Set(previous).add(value as FeatureId)
-					)
-				}
-			>
+			<Tabs className="gap-0" defaultValue={featureTabs[0].id} onValueChange={(value) => setMountedTabs((previous) => (previous.has(value as FeatureId) ? previous : new Set(previous).add(value as FeatureId)))}>
 				<div className="relative grid grid-cols-1 gap-px bg-border md:grid-cols-2 lg:grid-cols-4">
+					<DecorIcon className="size-4" position="top-left" />
+					<DecorIcon className="size-4" position="top-right" />
 					<FullWidthDivider position="top" />
 					<TabsList className="contents">
 						{featureTabs.map((tab) => (
 							<TabsTrigger
 								className="group/card relative flex h-auto! w-full flex-col items-start justify-between overflow-hidden whitespace-normal rounded-none border-0 bg-background p-4 text-start data-active:bg-secondary data-active:shadow-none! md:p-6 dark:data-active:bg-secondary/30"
 								key={tab.id}
-								value={tab.id}
-							>
-								<span className="relative z-10 flex items-center py-2 [&_svg]:text-primary">
-									{tab.icon}
-								</span>
+								value={tab.id}>
+								<span className="relative z-10 flex items-center py-2 [&_svg]:text-primary">{tab.icon}</span>
 
 								<span className="relative z-10 flex flex-col gap-2">
-									<span className="font-medium text-foreground text-lg">
-										{dict.features.tabs[tab.id].title}
-									</span>
-									<span className="text-muted-foreground text-xs leading-relaxed">
-										{dict.features.tabs[tab.id].description}
-									</span>
+									<span className="font-medium text-foreground text-lg">{dict.features.tabs[tab.id].title}</span>
+									<span className="text-muted-foreground text-xs leading-relaxed">{dict.features.tabs[tab.id].description}</span>
 								</span>
 							</TabsTrigger>
 						))}
@@ -110,12 +91,7 @@ export function FeatureSection({ dict }: { dict: Dictionary }) {
 				</div>
 
 				{featureTabs.map((tab) => (
-					<TabsContent
-						className="relative overflow-hidden"
-						keepMounted={mountedTabs.has(tab.id)}
-						key={tab.id}
-						value={tab.id}
-					>
+					<TabsContent className="relative overflow-hidden" keepMounted={mountedTabs.has(tab.id)} key={tab.id} value={tab.id}>
 						<ArcadeEmbed src={tab.embedSrc} title={tab.embedTitle} />
 						<FullWidthDivider position="bottom" />
 					</TabsContent>

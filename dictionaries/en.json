@@ -50,6 +50,28 @@
 			}
 		}
 	},
+	"secondaryFeatures": {
+		"title": "Hypersender is not just an API, it's a platform",
+		"subtitle": "Get a taste of what Hypersender can do for you",
+		"cards": {
+			"monitoring": {
+				"title": "Monitoring",
+				"description": "Hypersender provides uptime and performance monitoring for your Android phone (SMS) and WhatsApp. Get real-time notifications when your phone is offline."
+			},
+			"integrations": {
+				"title": "Integrations",
+				"description": "Hypersender integrates easily with your favorite programming tools and even external services like Zapier and more."
+			},
+			"searchability": {
+				"title": "Searchability",
+				"description": "Search your WhatsApp messages by date, sender, content, message type or even what device it was sent from!"
+			},
+			"otp": {
+				"title": "OTP Authentication",
+				"description": "Send secure one-time passwords via WhatsApp or SMS for user authentication, password resets, and transaction verification with built-in verification endpoints."
+			}
+		}
+	},
 	"theme": {
 		"label": "Change theme",
 		"light": "Light",
