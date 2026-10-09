@@ -7,6 +7,8 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { type CHANNEL, ChannelToggle } from "@/components/channel-toggle";
 import { type FREQUENCY, FrequencyToggle } from "@/components/frequency-toggle";
+import { DecorIcon } from "@/components/decor-icon";
+import { FullWidthDivider } from "@/components/full-width-divider";
 import type { Dictionary } from "@/i18n-config";
 import { StarIcon, CheckCircleIcon } from "lucide-react";
 
@@ -90,47 +92,55 @@ export function PricingSection({ dict }: { dict: Dictionary }) {
 	const [frequency, setFrequency] = React.useState<FREQUENCY>("monthly");
 	const [channel, setChannel] = React.useState<CHANNEL>("whatsapp");
 
+	// `pb-3` keeps the closing line off the very bottom of the page: the corner
+	// decor is centred on the line, so half of it needs room below it.
 	return (
-		<div className="flex w-full flex-col items-center justify-center space-y-7 p-4">
-			<div className="mx-auto max-w-xl space-y-2">
-				<h2 className="text-center font-bold text-2xl tracking-tight md:text-3xl lg:font-extrabold lg:text-4xl">
-					{dict.pricing.title}
-				</h2>
-				<p className="text-center text-muted-foreground text-sm md:text-base">
-					{dict.pricing.subtitle}
-				</p>
-			</div>
+		<div className="relative pb-3">
+			<div className="flex w-full flex-col items-center justify-center space-y-7 p-4">
+				<div className="mx-auto max-w-xl space-y-2">
+					<h2 className="text-center font-bold text-2xl tracking-tight md:text-3xl lg:font-extrabold lg:text-4xl">
+						{dict.pricing.title}
+					</h2>
+					<p className="text-center text-muted-foreground text-sm md:text-base">
+						{dict.pricing.subtitle}
+					</p>
+				</div>
 
-			<div className="flex flex-wrap items-center justify-center gap-3">
-				<ChannelToggle
-					channel={channel}
-					labels={{
-						whatsapp: dict.pricing.whatsapp,
-						sms: dict.pricing.sms,
-					}}
-					setChannel={setChannel}
-				/>
-				<FrequencyToggle
-					frequency={frequency}
-					labels={{
-						monthly: dict.pricing.monthly,
-						yearly: dict.pricing.yearly,
-					}}
-					setFrequency={setFrequency}
-				/>
-			</div>
-
-			<div className="mx-auto grid w-full max-w-7xl gap-6 grid-cols-1 md:grid-cols-3">
-				{plans[channel].map((plan) => (
-					<PricingCard
+				<div className="flex flex-wrap items-center justify-center gap-3">
+					<ChannelToggle
 						channel={channel}
-						dict={dict}
-						frequency={frequency}
-						key={plan.id}
-						plan={plan}
+						labels={{
+							whatsapp: dict.pricing.whatsapp,
+							sms: dict.pricing.sms,
+						}}
+						setChannel={setChannel}
 					/>
-				))}
+					<FrequencyToggle
+						frequency={frequency}
+						labels={{
+							monthly: dict.pricing.monthly,
+							yearly: dict.pricing.yearly,
+						}}
+						setFrequency={setFrequency}
+					/>
+				</div>
+
+				<div className="mx-auto grid w-full max-w-7xl gap-6 grid-cols-1 md:grid-cols-3">
+					{plans[channel].map((plan) => (
+						<PricingCard
+							channel={channel}
+							dict={dict}
+							frequency={frequency}
+							key={plan.id}
+							plan={plan}
+						/>
+					))}
+				</div>
 			</div>
+
+			<FullWidthDivider className="bottom-3" />
+			<DecorIcon className="bottom-3 size-4" position="bottom-left" />
+			<DecorIcon className="bottom-3 size-4" position="bottom-right" />
 		</div>
 	);
 }

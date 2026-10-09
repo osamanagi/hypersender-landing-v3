@@ -72,6 +72,42 @@
 			}
 		}
 	},
+	"otp": {
+		"title": "OTP verification via WhatsApp & SMS",
+		"subtitle": "Request codes, validate them, and ship passwordless links with one API.",
+		"steps": {
+			"request": {
+				"title": "Request",
+				"description": "Create a code or link, choose length and TTL, and deliver via WhatsApp or SMS."
+			},
+			"validate": {
+				"title": "Validate",
+				"description": "Verify the code once, enforce expiration, and observe status updates in real time."
+			},
+			"callback": {
+				"title": "Callback",
+				"description": "Use callbacks and webhooks to complete login, 2FA, recovery, or sensitive actions."
+			}
+		},
+		"cta": {
+			"title": "Launch OTP without a custom backend",
+			"description": "Follow the OTP guide or drop in the Postman collection to go live fast.",
+			"docs": "View OTP docs",
+			"postman": "Download Postman collection"
+		}
+	},
+	"sdkSection": {
+		"copyCommand": "Copy command",
+		"copied": "Copied",
+		"badge": "Laravel SDK",
+		"title": "Ship WhatsApp and SMS faster in Laravel",
+		"description": "Use the official Hypersender Laravel SDK for queued requests, webhooks, and typed helpers across WhatsApp and SMS.",
+		"installLabel": "Install via Composer",
+		"installCommand": "composer require hypersender/hypersender-laravel",
+		"nextSteps": "Publish the config, add your API keys, and start sending messages from Laravel.",
+		"docsCta": "View installation docs",
+		"githubCta": "View on GitHub"
+	},
 	"pricing": {
 		"title": "Plans that Scale with You",
 		"subtitle": "Whether you're just starting out or growing fast, our flexible pricing has you covered — with no hidden costs.",

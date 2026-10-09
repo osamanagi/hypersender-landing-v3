@@ -28,6 +28,8 @@ const secondaryFeatures: { id: SecondaryFeatureId; icon: React.ReactNode }[] = [
 export function SecondaryFeatureSection({ dict }: { dict: Dictionary }) {
 	return (
 		<div className="relative">
+			<DecorIcon className="size-4" position="top-left" />
+			<DecorIcon className="size-4" position="top-right" />
 			<FullWidthDivider position="top" />
 
 			<div className="mx-auto flex w-full max-w-7xl flex-col justify-center gap-12 px-4 py-16 sm:py-32 md:px-8">
@@ -51,6 +53,8 @@ export function SecondaryFeatureSection({ dict }: { dict: Dictionary }) {
 			</div>
 
 			<FullWidthDivider position="bottom" />
+			<DecorIcon className="size-4" position="bottom-left" />
+			<DecorIcon className="size-4" position="bottom-right" />
 		</div>
 	);
 }

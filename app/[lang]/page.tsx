@@ -6,6 +6,8 @@ import { getDictionary, hasLocale } from "@/get-dictionary";
 import { cn } from "@/lib/utils";
 import { FeatureSection } from "@/components/feature-section";
 import { SecondaryFeatureSection } from "@/components/secondary-feature-section";
+import { OtpSection } from "@/components/otp-section";
+import { SdkSection } from "@/components/sdk-section";
 import { PricingSection } from "@/components/pricing-section";
 
 export default async function Home({ params }: PageProps<"/[lang]">) {
@@ -29,6 +31,8 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
 				<LogosSection dict={dict} />
 				<FeatureSection dict={dict} />
 				<SecondaryFeatureSection dict={dict} />
+				<OtpSection dict={dict} />
+				<SdkSection dict={dict} />
 				<PricingSection dict={dict} />
 			</main>
 		</div>
