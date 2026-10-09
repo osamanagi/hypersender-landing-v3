@@ -303,5 +303,51 @@
 	},
 	"locale": {
 		"label": "Change language"
+	},
+	"faqs": {
+		"title": "Frequently Asked Questions",
+		"subtitle": "Learn more about Hypersender and how it can benefit your business.",
+		"contact": {
+			"prompt": "Can't find what you're looking for?",
+			"cta": "Contact Us"
+		},
+		"items": [
+			{
+				"question": "What is Hypersender?",
+				"answer": "Hypersender is a powerful API for sending Whatsapp and SMS messages. It is designed to be simple and easy to use, with a focus on security and reliability."
+			},
+			{
+				"question": "How can I benefit from using Hypersender?",
+				"answer": "By using Hypersender, you can bypass the high costs and limitations of traditional SMS providers and What'sApp Business API, offering you a cost-effective and unrestricted way to reach your audience."
+			},
+			{
+				"question": "Can I create and sell my own service using Hypersender?",
+				"answer": "Absolutely! As a developer-focused service, we encourage you to build and market innovative products with our API. We're excited to see what you create!"
+			},
+			{
+				"question": "Is the official WhatsApp Business API required?",
+				"answer": "No. A smartphone and phone number(s) are sufficient for sending and receiving messages."
+			},
+			{
+				"question": "How stable is the Hypersender services ?",
+				"answer": "We have prioritized stability and safety. On our part, we guarantee: Good server uptime is 99.9%, urgently update service, 24/7 customer support."
+			},
+			{
+				"question": "Is there a limit to the number of messages I can send with Hypersender WhatsApp API?",
+				"answer": "For Subscribed users there are no limits on the number of messages you can send per day, but for your own security and our community security messages are limited to a maximum of 10 messages per minute. For Free users, there is a send limit per day. (see pricing page for more details)"
+			},
+			{
+				"question": "What happens to my instances when I unsubscribe from a billing plan?",
+				"answer": "We retain your instances until your current billing period expires. After expiration, we only remove instances if they exceed your new plan limit, starting with the most recently created ones. We'll notify you by email about any changes when you unsubscribe."
+			},
+			{
+				"question": "Is there any free plan or trial period?",
+				"answer": "Yes, we offer a free 14 days plan that allows you to send a limited number of messages per day. You can upgrade to a paid plan at any time to remove these limits and access additional features."
+			},
+			{
+				"question": "Can I integrate Hypersender with my existing systems?",
+				"answer": "Yes, Hypersender is designed to be easily integrated with your existing systems, including CRMs, ERPs, and websites. Our API is developer-friendly and can be seamlessly integrated using any programming language."
+			}
+		]
 	}
 }

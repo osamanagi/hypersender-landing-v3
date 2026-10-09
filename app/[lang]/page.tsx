@@ -9,6 +9,7 @@ import { SecondaryFeatureSection } from "@/components/secondary-feature-section"
 import { OtpSection } from "@/components/otp-section";
 import { SdkSection } from "@/components/sdk-section";
 import { PricingSection } from "@/components/pricing-section";
+import { FaqsSection } from "@/components/faqs-section";
 
 export default async function Home({ params }: PageProps<"/[lang]">) {
 	const { lang } = await params;
@@ -34,6 +35,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
 				<OtpSection dict={dict} />
 				<SdkSection dict={dict} />
 				<PricingSection dict={dict} />
+				<FaqsSection dict={dict} locale={lang} />
 			</main>
 		</div>
 	);

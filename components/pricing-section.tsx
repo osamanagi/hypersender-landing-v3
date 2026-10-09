@@ -92,10 +92,8 @@ export function PricingSection({ dict }: { dict: Dictionary }) {
 	const [frequency, setFrequency] = React.useState<FREQUENCY>("monthly");
 	const [channel, setChannel] = React.useState<CHANNEL>("whatsapp");
 
-	// `pb-3` keeps the closing line off the very bottom of the page: the corner
-	// decor is centred on the line, so half of it needs room below it.
 	return (
-		<div className="relative pb-3">
+		<div className="relative">
 			<div className="flex w-full flex-col items-center justify-center space-y-7 p-4">
 				<div className="mx-auto max-w-xl space-y-2">
 					<h2 className="text-center font-bold text-2xl tracking-tight md:text-3xl lg:font-extrabold lg:text-4xl">
@@ -138,9 +136,9 @@ export function PricingSection({ dict }: { dict: Dictionary }) {
 				</div>
 			</div>
 
-			<FullWidthDivider className="bottom-3" />
-			<DecorIcon className="bottom-3 size-4" position="bottom-left" />
-			<DecorIcon className="bottom-3 size-4" position="bottom-right" />
+			<FullWidthDivider position="bottom" />
+			<DecorIcon className="size-4" position="bottom-left" />
+			<DecorIcon className="size-4" position="bottom-right" />
 		</div>
 	);
 }
