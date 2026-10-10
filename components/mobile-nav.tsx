@@ -4,11 +4,11 @@ import React from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Portal, PortalBackdrop } from "@/components/portal";
-import { navLinks } from "@/components/header";
+import { getNavHref, navLinks } from "@/components/header";
 import { XIcon, MenuIcon } from "lucide-react";
-import type { Dictionary } from "@/i18n-config";
+import type { Dictionary, Locale } from "@/i18n-config";
 
-export function MobileNav({ dict }: { dict: Dictionary }) {
+export function MobileNav({ dict, locale }: { dict: Dictionary; locale: Locale }) {
 	const [open, setOpen] = React.useState(false);
 
 	return (
@@ -45,7 +45,7 @@ export function MobileNav({ dict }: { dict: Dictionary }) {
 									key={link.key}
 									render={
 										<a
-											href={link.href}
+											href={getNavHref(link.href, locale)}
 											rel={link.external ? "noreferrer noopener" : undefined}
 											target={link.external ? "_blank" : undefined}
 										/>

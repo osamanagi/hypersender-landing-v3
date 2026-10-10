@@ -27,16 +27,16 @@ export async function Footer({
 		{
 			title: t.product,
 			items: [
-				{ label: t.features, href: "#features" },
-				{ label: t.pricing, href: "#pricing" },
-				{ label: t.sdk, href: "#laravel-sdk" },
+				{ label: t.features, href: `/${locale}#features` },
+				{ label: t.pricing, href: `/${locale}#pricing` },
+				{ label: t.sdk, href: `/${locale}#laravel-sdk` },
 				{ label: t.docs, href: "https://docs.hypersender.com", external: true },
 			],
 		},
 		{
 			title: t.resources,
 			items: [
-				{ label: t.faqs, href: "#faqs" },
+				{ label: t.faqs, href: `/${locale}#faqs` },
 				{ label: t.blog, href: `/${locale}/blog` },
 				{ label: t.discord, href: "https://discord.gg/ysSmK32ykC", external: true },
 				{ label: t.whatsapp, href: "https://wa.me/201065684630", external: true },

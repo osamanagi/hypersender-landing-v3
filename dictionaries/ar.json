@@ -9,7 +9,8 @@
 			"features": "الميزات",
 			"sdk": "باكدج Laravel",
 			"pricing": "الأسعار",
-			"docs": "الوثائق"
+			"docs": "الوثائق",
+			"blog": "المدونة"
 		},
 		"signIn": "تسجيل الدخول",
 		"getStarted": "ابدأ الآن",

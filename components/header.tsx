@@ -14,8 +14,13 @@ export const navLinks = [
 	{ key: "features", href: "#features", external: false },
 	{ key: "sdk", href: "#laravel-sdk", external: false },
 	{ key: "pricing", href: "#pricing", external: false },
+	{ key: "blog", href: "/blog", external: false },
 	{ key: "docs", href: "https://docs.hypersender.com", external: true },
 ] as const;
+
+export function getNavHref(href: string, locale: Locale) {
+	return href.startsWith("https://") ? href : `/${locale}${href}`;
+}
 
 export function Header({ dict, locale }: { dict: Dictionary; locale: Locale }) {
 	const scrolled = useScroll(10);
@@ -54,7 +59,7 @@ export function Header({ dict, locale }: { dict: Dictionary; locale: Locale }) {
 								key={link.key}
 								render={
 									<a
-										href={link.href}
+										href={getNavHref(link.href, locale)}
 										rel={link.external ? "noreferrer noopener" : undefined}
 										target={link.external ? "_blank" : undefined}
 									/>
@@ -81,7 +86,7 @@ export function Header({ dict, locale }: { dict: Dictionary; locale: Locale }) {
 						size="icon"
 					/>
 					<ThemeToggle labels={dict.theme} size="icon" />
-					<MobileNav dict={dict} />
+					<MobileNav dict={dict} locale={locale} />
 				</div>
 			</nav>
 		</header>

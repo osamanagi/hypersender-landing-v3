@@ -8,6 +8,8 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { getDictionary, hasLocale } from "@/get-dictionary";
 import { i18n } from "@/i18n-config";
 import { cn } from "@/lib/utils";
+import { FullWidthDivider } from "@/components/full-width-divider";
+import { DecorIcon } from "@/components/decor-icon";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -42,6 +44,7 @@ export async function generateMetadata({
 	const dict = await getDictionary(lang);
 
 	return {
+		metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://hypersender.com"),
 		title: dict.metadata.title,
 		description: dict.metadata.description,
 		alternates: {
@@ -92,7 +95,7 @@ export default async function RootLayout({
 							)}
 						>
 							<main>{children}</main>
-
+                            <FullWidthDivider />
 							<Footer dict={dict} locale={lang} />
 						</div>
 					</div>

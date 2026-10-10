@@ -9,7 +9,8 @@
 			"features": "Features",
 			"sdk": "Laravel SDK",
 			"pricing": "Pricing",
-			"docs": "Docs"
+			"docs": "Docs",
+			"blog": "Blog"
 		},
 		"signIn": "Sign In",
 		"getStarted": "Get Started",

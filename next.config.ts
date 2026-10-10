@@ -1,6 +1,9 @@
 import type { NextConfig } from "next";
+import createMDX from "@next/mdx";
+import path from "node:path";
 
 const nextConfig: NextConfig = {
+  pageExtensions: ["js", "jsx", "ts", "tsx", "mdx"],
   /* config options here */
   experimental: {
     agentFeedback: true,
@@ -18,4 +21,19 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+const withMDX = createMDX({
+  options: {
+    // Turbopack requires plugin names and serializable options.
+    remarkPlugins: ["remark-gfm"],
+    rehypePlugins: [
+      "rehype-slug",
+      path.resolve("lib/rehype-blog.mjs"),
+      ["rehype-pretty-code", {
+        theme: { light: "github-light", dark: "github-dark" },
+        keepBackground: false,
+      }],
+    ],
+  },
+});
+
+export default withMDX(nextConfig);
