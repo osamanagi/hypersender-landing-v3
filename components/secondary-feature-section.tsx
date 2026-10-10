@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils';
 import type React from 'react';
 import { DecorIcon } from '@/components/decor-icon';
-import { ActivityIcon, LockIcon, SearchIcon, ZapIcon } from 'lucide-react';
+import { LogInIcon, QrCodeIcon, SendIcon } from 'lucide-react';
 import type { Dictionary } from '@/i18n-config';
 import { FullWidthDivider } from './full-width-divider';
 
@@ -11,18 +11,12 @@ type FeatureType = {
 	description: string;
 };
 
-type SecondaryFeatureId = keyof Dictionary['secondaryFeatures']['cards'];
+type SecondaryFeatureId = keyof Dictionary['secondaryFeatures']['steps'];
 
-/**
- * Icons mirror the ones the old landing page used for these four features:
- * a pulse line (monitoring), a bolt (integrations), a magnifier (searchability)
- * and a padlock (OTP authentication).
- */
 const secondaryFeatures: { id: SecondaryFeatureId; icon: React.ReactNode }[] = [
-	{ id: 'monitoring', icon: <ActivityIcon /> },
-	{ id: 'integrations', icon: <ZapIcon /> },
-	{ id: 'searchability', icon: <SearchIcon /> },
-	{ id: 'otp', icon: <LockIcon /> },
+	{ id: 'createAccount', icon: <LogInIcon /> },
+	{ id: 'scanQr', icon: <QrCodeIcon /> },
+	{ id: 'startSending', icon: <SendIcon /> },
 ];
 
 export function SecondaryFeatureSection({ dict }: { dict: Dictionary }) {
@@ -37,15 +31,15 @@ export function SecondaryFeatureSection({ dict }: { dict: Dictionary }) {
 					<h2 className="font-medium text-3xl tracking-tight md:text-5xl">
 						{dict.secondaryFeatures.title}
 					</h2>
-					<p className="text-muted-foreground text-sm leading-relaxed md:text-base">
+					<p className="whitespace-pre-line text-muted-foreground text-sm leading-relaxed md:text-base">
 						{dict.secondaryFeatures.subtitle}
 					</p>
 				</div>
 
-				<div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
+				<div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
 					{secondaryFeatures.map(({ id, icon }) => (
 						<FeatureCard
-							feature={{ icon, ...dict.secondaryFeatures.cards[id] }}
+							feature={{ icon, ...dict.secondaryFeatures.steps[id] }}
 							key={id}
 						/>
 					))}
