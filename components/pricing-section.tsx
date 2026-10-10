@@ -93,7 +93,7 @@ export function PricingSection({ dict }: { dict: Dictionary }) {
 	const [channel, setChannel] = React.useState<CHANNEL>("whatsapp");
 
 	return (
-		<div className="relative">
+		<div className="relative" id="pricing">
 			<div className="flex w-full flex-col items-center justify-center space-y-7 p-4">
 				<div className="mx-auto max-w-xl space-y-2">
 					<h2 className="text-center font-bold text-2xl tracking-tight md:text-3xl lg:font-extrabold lg:text-4xl">

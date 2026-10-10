@@ -355,5 +355,21 @@
 		"description": "Create a free Hypersender account and try the WhatsApp API and SMS API for 14 days — send up to 100 messages a day from 1 number, with no hidden costs.",
 		"contactSales": "Contact Sales",
 		"getStarted": "Get Started"
+	},
+	"footer": {
+		"product": "Product",
+		"resources": "Resources",
+		"legal": "Legal",
+		"features": "Features",
+		"pricing": "Pricing",
+		"sdk": "Laravel SDK",
+		"docs": "Docs",
+		"faqs": "FAQ",
+		"blog": "Blog",
+		"discord": "Discord",
+		"whatsapp": "WhatsApp",
+		"terms": "Terms and Conditions",
+		"privacy": "Privacy Policy",
+		"rights": "© {year} Hypersender. All rights reserved."
 	}
 }
