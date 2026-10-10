@@ -349,5 +349,11 @@
 				"answer": "Yes, Hypersender is designed to be easily integrated with your existing systems, including CRMs, ERPs, and websites. Our API is developer-friendly and can be seamlessly integrated using any programming language."
 			}
 		]
+	},
+	"ctaSection": {
+		"title": "Start Sending WhatsApp and SMS Messages Today",
+		"description": "Create a free Hypersender account and try the WhatsApp API and SMS API for 14 days — send up to 100 messages a day from 1 number, with no hidden costs.",
+		"contactSales": "Contact Sales",
+		"getStarted": "Get Started"
 	}
 }

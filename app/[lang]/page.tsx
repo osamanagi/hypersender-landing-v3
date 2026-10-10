@@ -10,6 +10,7 @@ import { OtpSection } from "@/components/otp-section";
 import { SdkSection } from "@/components/sdk-section";
 import { PricingSection } from "@/components/pricing-section";
 import { FaqsSection } from "@/components/faqs-section";
+import { CallToAction } from "@/components/cta";
 
 export default async function Home({ params }: PageProps<"/[lang]">) {
 	const { lang } = await params;
@@ -23,7 +24,6 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
 			<main
 				className={cn(
 					"relative mx-auto max-w-7xl grow",
-					// X Borders
 					"before:absolute before:-inset-y-14 before:-left-px before:w-px before:bg-border",
 					"after:absolute after:-inset-y-14 after:-right-px after:w-px after:bg-border"
 				)}
@@ -36,6 +36,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
 				<SdkSection dict={dict} />
 				<PricingSection dict={dict} />
 				<FaqsSection dict={dict} locale={lang} />
+				<CallToAction dict={dict} />
 			</main>
 		</div>
 	);

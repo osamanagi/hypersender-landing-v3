@@ -18,8 +18,6 @@ export function FaqsSection({
 	dict: Dictionary;
 	locale: Locale;
 }) {
-	// The guide line, and the crosses on it, sit on the edge of the questions
-	// column that faces the copy — that edge flips with the reading direction.
 	const isRtl = i18n.dir[locale] === "rtl";
 
 	return (
@@ -51,7 +49,7 @@ export function FaqsSection({
 					<div
 						aria-hidden="true"
 						className={cn(
-							"pointer-events-none absolute top-0 bottom-3 w-px bg-border",
+							"pointer-events-none absolute inset-y-0 w-px bg-border",
 							isRtl ? "right-3" : "left-3"
 						)}
 					/>
@@ -83,9 +81,9 @@ export function FaqsSection({
 				</div>
 			</div>
 
-			<FullWidthDivider className="bottom-3" />
-			<DecorIcon className="bottom-3 size-4" position="bottom-left" />
-			<DecorIcon className="bottom-3 size-4" position="bottom-right" />
+			<FullWidthDivider position="bottom" />
+			<DecorIcon className="size-4" position="bottom-left" />
+			<DecorIcon className="size-4" position="bottom-right" />
 		</section>
 	);
 }
