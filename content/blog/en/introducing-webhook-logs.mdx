@@ -1,0 +1,58 @@
+export const post = {
+  "title": "Introducing Webhook Logs: See, Debug, and Retry",
+  "description": "Track every webhook, inspect requests and responses, and safely retry failures—right from your Hypersender dashboard.",
+  "date": "2025-10-20",
+  "author": "Hypersender",
+  "category": "Product updates",
+  "image": "/Images/blog/introducing-webhook-logs.png",
+  "imageAlt": "A fine green grid glowing softly on a dark surface"
+};
+
+We are happy to introduce the Webhook Logs feature that gives you full visibility into every webhook your app send, we sent, what your endpoint returned, and a safe way to retry failures without writing a line of code.
+
+## What you get
+
+- A timeline of all webhook attempts with status (Success/Failed), endpoint, event, timestamp, and response time.
+- Powerful filters: by status, date range, and endpoint URL.
+- A details view for each attempt: request headers, payload, response status/body, error message.
+- One-click retries for failed deliveries, with bulk retry support when you need to catch up.
+
+## Where to find it
+
+In your Hypersender dashboard, open Webhook Logs. You'll see the most recent events first, with pagination for larger histories. Click any row to inspect the full request/response.
+
+<figure>
+	<img src="/Images/screenshots/webhook-logs-list.png" alt="Webhook Logs list view showing filters, status, response time, and endpoints" width={2846} height={1506} />
+	<figcaption>Filter by status, date range, and endpoint. Sort by time or response time.</figcaption>
+</figure>
+
+## How retries work
+
+- You can retry individual failed requests or select many and retry in bulk.
+- Retries are queued and rate-limited to avoid spikes and duplicate deliveries.
+- We keep the original attempt intact and add a new log entry for each retry, so you always have a clean audit trail.
+- To protect your endpoints, successful webhooks can be retried up to 3 times; failed webhooks up to 5 times.
+
+<figure>
+	<img src="/Images/screenshots/webhook-log-detail.png" alt="Webhook Log detail view showing request headers, payload, response headers and body with copy buttons" width={2880} height={2710} />
+	<figcaption>Open a log to inspect request/response, copy headers and payload, and see retry count.</figcaption>
+</figure>
+
+Webhook Logs are kept based on your subscription plan. Higher tiers retain more history so you can investigate longer windows. If you upgrade or downgrade, your visible history adjusts automatically.
+
+> Note: Retention windows vary by plan. Check your exact limits in Subscriptions Page.
+
+## Privacy and data handling
+
+- Logs are scoped to your account only your team can see your webhook logs.
+- We store request/response metadata so you can debug quickly. Very large response bodies are truncated for performance and clarity.
+- Be mindful not to include secrets in webhook payloads or responses unless necessary.
+
+## Quick start
+
+1. Set your webhook URL in your Hypersender settings (WhatsApp, SMS, or both).
+2. Trigger an event (e.g., send a message) to generate a webhook.
+3. Open Webhook Logs to watch requests come in, filter by status, and drill into details.
+4. If something failed, hit Retry on the entry or select multiple and retry in bulk.
+
+That's it! Thanks!

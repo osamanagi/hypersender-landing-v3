@@ -4,14 +4,23 @@ import type { Locale } from "@/i18n-config";
 // Register trusted local MDX explicitly; keep the same slug for translations.
 const articles = {
   en: {
-    "reliable-messaging": () => import("@/content/blog/en/reliable-messaging.mdx"),
-    "messaging-dashboard": () => import("@/content/blog/en/messaging-dashboard.mdx"),
-    "reusable-workflows": () => import("@/content/blog/en/reusable-workflows.mdx"),
+    "avoid-banned-whatsapp-number": () => import("@/content/blog/en/avoid-banned-whatsapp-number.mdx"),
+    "how-to-send-whatsapp-messages-in-laravel": () => import("@/content/blog/en/how-to-send-whatsapp-messages-in-laravel.mdx"),
+    "how-we-handle-whatsapp-message-capping": () => import("@/content/blog/en/how-we-handle-whatsapp-message-capping.mdx"),
+    "how-we-handle-whatsapp-timelock-restrictions": () => import("@/content/blog/en/how-we-handle-whatsapp-timelock-restrictions.mdx"),
+    "hypersender-whatsapp-api-vs-whatsapp-business-api-which-is-right-for-your-business": () =>
+      import("@/content/blog/en/hypersender-whatsapp-api-vs-whatsapp-business-api-which-is-right-for-your-business.mdx"),
+    "introducing-hypersender-laravel-sdk": () => import("@/content/blog/en/introducing-hypersender-laravel-sdk.mdx"),
+    "introducing-webhook-logs": () => import("@/content/blog/en/introducing-webhook-logs.mdx"),
+    "using-whatsapp-business-with-landline": () => import("@/content/blog/en/using-whatsapp-business-with-landline.mdx"),
   },
   ar: {
-    "reliable-messaging": () => import("@/content/blog/ar/reliable-messaging.mdx"),
-    "messaging-dashboard": () => import("@/content/blog/ar/messaging-dashboard.mdx"),
-    "reusable-workflows": () => import("@/content/blog/ar/reusable-workflows.mdx"),
+    "avoid-banned-whatsapp-number": () => import("@/content/blog/ar/avoid-banned-whatsapp-number.mdx"),
+    "how-to-send-whatsapp-messages-in-laravel": () => import("@/content/blog/ar/how-to-send-whatsapp-messages-in-laravel.mdx"),
+    "hypersender-whatsapp-api-vs-whatsapp-business-api-which-is-right-for-your-business": () =>
+      import("@/content/blog/ar/hypersender-whatsapp-api-vs-whatsapp-business-api-which-is-right-for-your-business.mdx"),
+    "introducing-webhook-logs": () => import("@/content/blog/ar/introducing-webhook-logs.mdx"),
+    "using-whatsapp-business-with-landline": () => import("@/content/blog/ar/using-whatsapp-business-with-landline.mdx"),
   },
 } as const;
 

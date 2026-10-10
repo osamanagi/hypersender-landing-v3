@@ -168,6 +168,12 @@
   color: var(--muted-foreground);
 }
 .blog-prose img { border-radius: var(--radius); border: 1px solid var(--border); }
+.blog-prose figcaption {
+  margin-top: 0.75rem;
+  text-align: center;
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+}
 .blog-prose :not(pre) > code {
   padding: 0.15rem 0.35rem;
   border-radius: 0.25rem;

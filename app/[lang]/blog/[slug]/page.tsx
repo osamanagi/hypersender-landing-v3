@@ -39,7 +39,7 @@ export default async function BlogPostPage({ params }: PageProps<"/[lang]/blog/[
   const post = await getPost(lang, slug);
   if (!post) notFound();
   const t = blogLabels[lang];
-  const related = (await getPosts(lang)).filter((article) => article.slug !== slug).slice(0, 2);
+  const related = (await getPosts(lang)).filter((article) => article.slug !== slug).slice(0, 3);
   const { Content } = post;
 
   return (
@@ -74,7 +74,7 @@ export default async function BlogPostPage({ params }: PageProps<"/[lang]/blog/[
         <section className="relative pt-8" aria-labelledby="related-posts">
           <FullWidthDivider position="top" contained />
           <h2 id="related-posts" className="px-4 text-2xl font-semibold tracking-tight md:px-6">{t.related}</h2>
-          <div className="grid gap-2 p-2 sm:p-4 md:grid-cols-2">{related.map((article) => <BlogCard key={article.slug} post={article} locale={lang} />)}</div>
+          <div className="grid gap-2 p-2 sm:p-4 md:grid-cols-2 lg:grid-cols-3">{related.map((article) => <BlogCard key={article.slug} post={article} locale={lang} />)}</div>
         </section>
       )}
     </div>

@@ -1,0 +1,341 @@
+export const post = {
+  "title": "كيف ترسل رسائل واتساب في Laravel",
+  "description": "تعلم كيف تدمج رسائل الواتساب في تطبيق Laravel حقك باستخدام Hypersender SDK.",
+  "date": "2025-12-11",
+  "author": "Hypersender",
+  "category": "أدلة المطورين",
+  "image": "/Images/blog/how-to-send-whatsapp-messages-in-laravel.png",
+  "imageAlt": "موجات خضراء عمودية تتدفق على خلفية داكنة"
+};
+
+تبي ترسل رسائل واتساب من تطبيق Laravel حقك؟ هذا الدليل يوريك كيف تسويها باستخدام Hypersender Laravel SDK.
+
+## إيش راح تحتاج
+
+قبل ما تبدأ، تحتاج:
+- تطبيق Laravel (8.x أو أحدث)
+- PHP 8.2+
+- حساب Hypersender ([سجل هنا](https://app.hypersender.com/))
+- مفتاح الـAPI ورقم الـInstance من لوحة تحكم Hypersender
+
+## التثبيت
+
+ثبّت Hypersender SDK عن طريق Composer:
+
+```bash
+composer require hypersender/hypersender-laravel
+```
+
+انشر ملف الإعدادات:
+
+```bash
+php artisan vendor:publish --tag=hypersender-config
+```
+
+حط بياناتك في ملف `.env`:
+
+```env
+HYPERSENDER_WHATSAPP_API_KEY=your_api_key
+HYPERSENDER_WHATSAPP_INSTANCE_ID=your_instance_id
+```
+
+تلاقي مفتاح الـAPI ورقم الـInstance في لوحة تحكم Hypersender تحت الإعدادات.
+
+## أرسل أول رسالة لك
+
+هذي أسهل طريقة ترسل رسالة واتساب:
+
+```php
+use Hypersender\Hypersender;
+
+Hypersender::whatsapp()
+    ->safeSendTextMessage(
+        chat_id: '20123456789@c.us',
+        text: 'مرحباً من Laravel!'
+    );
+```
+
+صيغة `chat_id` تكون رقم الجوال (مع كود الدولة) وبعدين `@c.us`. مثلاً، رقم سعودي `+966 50 123 4567` يصير `966501234567@c.us`.
+
+### ليش تستخدم safeSendTextMessage؟
+
+طريقة `safeSendTextMessage` تضيف توقيت طبيعي بين الرسائل. هذا مهم لأن الواتساب ممكن يعلّم الحسابات اللي ترسل رسائل بسرعة. لو تسوي بوت دردشة أو نظام إشعارات، دايماً استخدم الطريقة الآمنة.
+
+## أرسل أنواع رسائل مختلفة
+
+### الصور
+
+```php
+Hypersender::whatsapp()
+    ->sendImageUrl(
+        chat_id: '20123456789@c.us',
+        url: 'https://example.com/image.jpg',
+        caption: 'شوف هذا!'
+    );
+```
+
+أو ارفع من storage Laravel حقك:
+
+```php
+use Illuminate\Support\Facades\Storage;
+
+$filePath = Storage::path('images/photo.jpg');
+
+Hypersender::whatsapp()
+    ->sendImageUpload(
+        chat_id: '20123456789@c.us',
+        filePath: $filePath,
+        caption: 'صورة من تطبيقنا'
+    );
+```
+
+### الفيديوهات
+
+```php
+Hypersender::whatsapp()
+    ->sendVideoUrl(
+        chat_id: '20123456789@c.us',
+        url: 'https://example.com/video.mp4',
+        caption: 'فيديو تعليمي'
+    );
+```
+
+### المستندات
+
+```php
+Hypersender::whatsapp()
+    ->sendFileUrl(
+        chatId: '20123456789@c.us',
+        url: 'https://example.com/invoice.pdf',
+        fileName: 'invoice.pdf',
+        mimeType: 'application/pdf',
+        caption: 'فاتورتك'
+    );
+```
+
+### الموقع
+
+```php
+Hypersender::whatsapp()
+    ->sendLocation(
+        chat_id: '20123456789@c.us',
+        latitude: '37.7749',
+        longitude: '-122.4194',
+        title: 'مكتبنا'
+    );
+```
+
+## مثال حقيقي: إشعارات الطلبات
+
+هذا كيف ترسل تأكيدات الطلبات باستخدام نظام الإشعارات في Laravel:
+
+أول شي، سوّي كلاس notification:
+
+```bash
+php artisan make:notification OrderConfirmed
+```
+
+بعدين سوّي الـnotification:
+
+```php
+namespace App\Notifications;
+
+use App\Models\Order;
+use Illuminate\Bus\Queueable;
+use Illuminate\Notifications\Notification;
+use Hypersender\Notifications\WhatsappChannel;
+use Hypersender\Notifications\WhatsappMessage;
+
+class OrderConfirmed extends Notification
+{
+    use Queueable;
+
+    public function __construct(
+        public Order $order
+    ) {}
+
+    public function via($notifiable): array
+    {
+        return [WhatsappChannel::class];
+    }
+
+    public function toWhatsapp($notifiable): WhatsappMessage
+    {
+        $message = "مرحباً {$notifiable->name}!\n\n";
+        $message .= "طلبك #{$this->order->id} تأكد.\n\n";
+        $message .= "المنتجات:\n";
+
+        foreach ($this->order->items as $item) {
+            $message .= "• {$item->name} (x{$item->quantity})\n";
+        }
+
+        $message .= "\nالمجموع: {$this->order->total} ريال\n";
+        $message .= "وقت التوصيل المتوقع: {$this->order->delivery_date}";
+
+        return WhatsappMessage::create()
+            ->text($message);
+    }
+}
+```
+
+حط method الـ`routeNotificationForWhatsapp` في model User حقك:
+
+```php
+namespace App\Models;
+
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+
+class User extends Authenticatable
+{
+    use Notifiable;
+
+    public function routeNotificationForWhatsapp(): string
+    {
+        // الصيغة: رقم الجوال مع كود الدولة + @c.us
+        $phone = preg_replace('/[^0-9]/', '', $this->phone);
+        return $phone . '@c.us';
+    }
+}
+```
+
+الحين أرسل الإشعارات من الـcontroller حقك:
+
+```php
+use App\Notifications\OrderConfirmed;
+
+class OrderController extends Controller
+{
+    public function store(Request $request)
+    {
+        $order = Order::create($request->validated());
+
+        // أرسل إشعار واتساب
+        $request->user()->notify(new OrderConfirmed($order));
+
+        return redirect()->route('orders.show', $order);
+    }
+}
+```
+
+تقدر أيضاً ترسل لأي مستخدم:
+
+```php
+use App\Models\User;
+use App\Notifications\OrderConfirmed;
+
+$user = User::find(1);
+$user->notify(new OrderConfirmed($order));
+```
+
+أو استخدم on-demand notifications للضيوف:
+
+```php
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\OrderConfirmed;
+
+Notification::route('whatsapp', '966501234567@c.us')
+    ->notify(new OrderConfirmed($order));
+```
+
+## استخدم Queues لأداء أفضل
+
+إرسال الرسائل بشكل مباشر ممكن يبطّي تطبيقك. استخدم Laravel queues عشان ترسل الرسائل في الخلفية:
+
+```php
+namespace App\Jobs;
+
+use Hypersender\Hypersender;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+
+class SendWhatsAppMessage implements ShouldQueue
+{
+    use Dispatchable, InteractsWithQueue, Queueable;
+
+    public function __construct(
+        public string $chatId,
+        public string $message
+    ) {}
+
+    public function handle(): void
+    {
+        Hypersender::whatsapp()
+            ->safeSendTextMessage(
+                chat_id: $this->chatId,
+                text: $this->message
+            );
+    }
+}
+```
+
+شغّل الـjob:
+
+```php
+SendWhatsAppMessage::dispatch($chatId, $message);
+```
+
+## تعامل مع الرسائل الواردة
+
+الـSDK تلقائياً يسوي webhook route للرسائل الواردة. استمع للأحداث في `EventServiceProvider` حقك:
+
+```php
+use Hypersender\Events\Whatsapp\MessagesAny;
+
+protected $listen = [
+    MessagesAny::class => [
+        HandleIncomingWhatsAppMessage::class,
+    ],
+];
+```
+
+سوّي الـlistener:
+
+```php
+namespace App\Listeners;
+
+use Hypersender\Events\Whatsapp\MessagesAny;
+use Illuminate\Support\Facades\Log;
+
+class HandleIncomingWhatsAppMessage
+{
+    public function handle(MessagesAny $event): void
+    {
+        $message = $event->payload;
+
+        Log::info('استقبلت رسالة واتساب', [
+            'من' => $message['key']['remoteJid'],
+            'النص' => $message['message']['conversation'] ?? null,
+        ]);
+
+        // حط الكود حقك هنا
+        // رد على الرسالة، احفظها في قاعدة البيانات، الخ.
+    }
+}
+```
+
+## مشاكل شائعة
+
+### الرسائل ما ترسل
+
+تأكد إن رقم الواتساب حقك متصل في لوحة تحكم Hypersender. تحتاج تمسح رمز الـQR قبل ما تقدر ترسل رسائل.
+
+### صيغة Chat ID غلط
+
+الـchat ID لازم يكون بصيغة `phonenumber@c.us`. لا تحط علامة `+` أو أي مسافات. بس أرقام وبعدين `@c.us`.
+
+### الواتساب يحد من عدد الرسائل
+
+الواتساب ما يحب الرسائل الكثيرة بسرعة. استخدم `safeSendTextMessage` ولا ترسل رسائل كثيرة مرة وحدة. لو عندك رسائل جماعية، حط وقت بين كل رسالة والثانية.
+
+## الخطوات الجاية
+
+الحين إنك عرفت الأساسيات، تقدر:
+
+- تسوي [معالجة webhook](https://docs.hypersender.com/v2/packages-and-sdks/laravel/whatsapp/webhook-handling) لمحادثات ذهاب وإياب
+- تتعلم عن [الطلبات في الطابور](https://docs.hypersender.com/v2/packages-and-sdks/laravel/whatsapp/queued-requests) لتتبع حالة الرسائل
+- تكتشف [وثائق الـAPI الكاملة](https://docs.hypersender.com/v2/packages-and-sdks/laravel/whatsapp/send-messages)
+
+وثائق الـSDK الكاملة موجودة في [docs.hypersender.com](https://docs.hypersender.com/v2/packages-and-sdks/laravel/installation).

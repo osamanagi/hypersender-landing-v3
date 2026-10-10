@@ -1,0 +1,391 @@
+export const post = {
+  "title": "Introducing Hypersender Laravel SDK",
+  "description": "Easily integrate Hypersender into your Laravel applications with our new SDK.",
+  "date": "2025-12-11",
+  "author": "Hypersender",
+  "category": "Developer guides",
+  "image": "/Images/blog/introducing-hypersender-laravel-sdk.png",
+  "imageAlt": "Layered green bands drifting across a deep dark background"
+};
+
+We just released the official Hypersender Laravel SDK. It's a package that brings WhatsApp and SMS messaging directly into your Laravel apps.
+
+## Why We Built This
+
+Building messaging features shouldn't mean wrestling with HTTP clients or complex API integrations. We wanted a package that feels like it belongs in Laravel. One that uses queues, events, config files, and Artisan commands like any other first-party package.
+
+So we built it.
+
+## What's Included
+
+The SDK covers both WhatsApp and SMS in one package:
+
+- Clean, fluent API that follows Laravel conventions
+- Queue integration for background message processing
+- Real-time webhooks with automatic event dispatching
+- File uploads using Laravel's filesystem
+- Type-safe methods for PHP 8.2+
+- V2 API support with queued requests
+
+## Installation
+
+Install the package via Composer:
+
+```bash
+composer require hypersender/hypersender-laravel
+```
+
+Publish the configuration file:
+
+```bash
+php artisan vendor:publish --tag=hypersender-config
+```
+
+Add your credentials to `.env`:
+
+```env
+# WhatsApp Configuration
+HYPERSENDER_WHATSAPP_API_KEY=your_api_key
+HYPERSENDER_WHATSAPP_INSTANCE_ID=your_instance_id
+
+# SMS Configuration
+HYPERSENDER_SMS_API_KEY=your_api_key
+HYPERSENDER_SMS_INSTANCE_ID=your_instance_id
+```
+
+That's it. Start sending messages.
+
+## Sending Messages
+
+### WhatsApp
+
+Here's how to send a WhatsApp message:
+
+```php
+use Hypersender\Hypersender;
+
+// Safe text message with human-like pacing
+Hypersender::whatsapp()
+    ->safeSendTextMessage(
+        chat_id: '20123456789@c.us',
+        text: 'Hello from Laravel! 👋'
+    );
+```
+
+We recommend using `safeSendTextMessage` because it adds natural timing patterns between messages. This helps keep your number safe from blocks.
+
+### Rich Media Support
+
+Send images, videos, voice messages, and more:
+
+```php
+// Send an image
+Hypersender::whatsapp()
+    ->sendImageUrl(
+        chat_id: '20123456789@c.us',
+        url: 'https://example.com/photo.jpg',
+        caption: 'Check out our new product! 🚀'
+    );
+
+// Send a video
+Hypersender::whatsapp()
+    ->sendVideoUrl(
+        chat_id: '20123456789@c.us',
+        url: 'https://example.com/demo.mp4',
+        caption: 'Product demo video'
+    );
+
+// Send a voice message
+Hypersender::whatsapp()
+    ->sendVoiceUrl(
+        chat_id: '20123456789@c.us',
+        url: 'https://example.com/audio.opus'
+    );
+```
+
+### File Uploads Made Simple
+
+The SDK seamlessly integrates with Laravel's filesystem. Upload files directly from storage:
+
+```php
+use Illuminate\Support\Facades\Storage;
+
+// Upload from Laravel storage
+$filePath = Storage::path('documents/invoice.pdf');
+
+Hypersender::whatsapp()
+    ->sendFileUpload(
+        chatId: '20123456789@c.us',
+        filePath: $filePath,
+        fileName: 'invoice.pdf',
+        mimeType: 'application/pdf',
+        caption: 'Your invoice is ready'
+    );
+
+// Works with images too
+$imagePath = Storage::path('photos/product.jpg');
+
+Hypersender::whatsapp()
+    ->sendImageUpload(
+        chat_id: '20123456789@c.us',
+        filePath: $imagePath,
+        caption: 'New product launch!'
+    );
+```
+
+### Interactive Features
+
+Create engaging experiences with polls, locations, and contact cards:
+
+```php
+// Send a poll
+Hypersender::whatsapp()
+    ->sendPoll(
+        chat_id: '20123456789@c.us',
+        poll: [
+            'name' => 'Which feature should we build next?',
+            'options' => [
+                'Dark mode',
+                'Export to PDF',
+                'Mobile app'
+            ],
+            'multipleAnswers' => true
+        ]
+    );
+
+// Share a location
+Hypersender::whatsapp()
+    ->sendLocation(
+        chat_id: '20123456789@c.us',
+        latitude: '37.7749',
+        longitude: '-122.4194',
+        title: 'Our Office'
+    );
+
+// Send a contact card
+Hypersender::whatsapp()
+    ->sendContactCard(
+        chatId: '20123456789@c.us',
+        contacts: [[
+            'fullName' => 'Support Team',
+            'phoneNumber' => '12025550123',
+            'organization' => 'Acme Inc'
+        ]]
+    );
+```
+
+### Custom Link Previews
+
+Take control of how your links appear:
+
+```php
+Hypersender::whatsapp()
+    ->sendLinkCustomPreviewUrl(
+        chatId: '20123456789@c.us',
+        text: 'Check out our latest blog post: https://example.com/blog',
+        previewTitle: '10 Ways to Boost Productivity',
+        previewDescription: 'Learn practical tips from industry experts',
+        previewImageUrl: 'https://example.com/blog-cover.jpg',
+        highQuality: true
+    );
+```
+
+## SMS
+
+Send SMS messages through your Android device:
+
+```php
+// Send an SMS
+Hypersender::sms()
+    ->sendMessage(
+        content: 'Your verification code is: 123456',
+        to: '+1234567890',
+        requestId: uniqid()
+    );
+
+// Schedule a message
+Hypersender::sms()
+    ->sendMessage(
+        content: 'Reminder: Your appointment is tomorrow',
+        to: '+1234567890',
+        requestId: uniqid(),
+        scheduleSendAt: '2025-12-15 09:00:00'
+    );
+
+// List messages with filters
+$response = Hypersender::sms()
+    ->messages(
+        page: 1,
+        perPage: 50,
+        status: 'sent'
+    );
+```
+
+## Queued Requests
+
+In V2, all requests go through a queue system. Every API call returns a `queued_request_uuid`:
+
+```php
+// Send a message
+$response = Hypersender::whatsapp()
+    ->safeSendTextMessage(
+        chat_id: '20123456789@c.us',
+        text: 'Hello!'
+    );
+
+$uuid = $response->json()['queued_request_uuid'];
+
+// Check the status later
+$result = Hypersender::whatsapp()
+    ->getQueuedRequest(uuid: $uuid);
+
+if ($result->json()['response_status'] === 200) {
+    $messageId = $result->json()['response_body']['message_id'];
+    // Message sent successfully
+}
+```
+
+For production applications, use webhooks instead of polling to receive real-time status updates.
+
+## Real-Time Webhooks
+
+The SDK automatically sets up webhook routes and dispatches Laravel events for every webhook type:
+
+```php
+use Hypersender\Events\Whatsapp\MessagesAny;
+use Illuminate\Support\Facades\Event;
+
+// Listen for incoming messages
+Event::listen(MessagesAny::class, function ($event) {
+    $message = $event->payload;
+
+    // Process the incoming message
+    Log::info('Received message', $message);
+});
+```
+
+Available webhook events include:
+- `PresenceUpdate` - User online/offline status
+- `MessagesAny` - Incoming messages
+- `MessageReaction` - Message reactions
+- `MessagesAck` - Message delivery status
+- `MessagesRevoked` - Deleted messages
+- `PollVote` - Poll responses
+- And more
+
+### Custom Webhook Processing
+
+Need custom webhook logic? Override the default webhook job:
+
+```php
+namespace App\Jobs;
+
+use Hypersender\Contracts\WhatsappWebhookJobInterface;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
+
+class CustomWhatsappWebhookJob implements ShouldQueue, WhatsappWebhookJobInterface
+{
+    use Dispatchable, Queueable;
+
+    public function __construct(
+        public array $payload,
+        public ?string $secret = null
+    ) {
+        // Route to specific queue
+        if ($queue = config('hypersender-config.whatsapp_queue')) {
+            $this->onQueue($queue);
+        }
+    }
+
+    public function handle(): void
+    {
+        // Your custom processing logic
+        $eventType = $this->payload['event'];
+
+        match($eventType) {
+            'messages.any' => $this->handleIncomingMessage(),
+            'messages.ack' => $this->handleDeliveryStatus(),
+            default => logger()->info('Unhandled event', $this->payload)
+        };
+    }
+
+    private function handleIncomingMessage(): void
+    {
+        // Custom message handling
+    }
+
+    private function handleDeliveryStatus(): void
+    {
+        // Custom delivery tracking
+    }
+}
+```
+
+Register your custom job in `.env`:
+
+```env
+HYPERSENDER_WHATSAPP_WEBHOOK_JOB=App\Jobs\CustomWhatsappWebhookJob
+```
+
+## Laravel Integration
+
+The package works like any other Laravel package:
+
+### Queue Integration
+
+All webhook processing is queued automatically. Configure your queue in `.env`:
+
+```env
+HYPERSENDER_WHATSAPP_QUEUE=messaging
+HYPERSENDER_SMS_QUEUE=sms
+```
+
+### Environment-Based Configuration
+
+Configure everything via environment variables:
+
+```env
+# WhatsApp
+HYPERSENDER_WHATSAPP_API_KEY=your_key
+HYPERSENDER_WHATSAPP_INSTANCE_ID=your_instance
+HYPERSENDER_WHATSAPP_WEBHOOK_ROUTE=whatsapp/webhook
+HYPERSENDER_WHATSAPP_WEBHOOK_AUTHORIZATION_SECRET=your_secret
+
+# SMS
+HYPERSENDER_SMS_API_KEY=your_key
+HYPERSENDER_SMS_INSTANCE_ID=your_instance
+HYPERSENDER_SMS_WEBHOOK_ROUTE=sms/webhook
+```
+
+### Artisan Commands
+
+Use familiar Artisan commands for setup:
+
+```bash
+php artisan vendor:publish --tag=hypersender-config
+```
+
+## Get Started
+
+Here's what you need:
+
+**Documentation:**
+- [Installation Guide](https://docs.hypersender.com/v2/packages-and-sdks/laravel/installation)
+- [WhatsApp Usage](https://docs.hypersender.com/v2/packages-and-sdks/laravel/whatsapp/send-messages)
+- [SMS Usage](https://docs.hypersender.com/v2/packages-and-sdks/laravel/sms/send-messages)
+- [Webhook Handling](https://docs.hypersender.com/v2/packages-and-sdks/laravel/whatsapp/webhook-handling)
+- [Queued Requests](https://docs.hypersender.com/v2/packages-and-sdks/laravel/whatsapp/queued-requests)
+
+**Getting Started:**
+1. [Sign up for Hypersender](https://app.hypersender.com/)
+2. Get your API key and Instance ID from the dashboard
+3. Install the package: `composer require hypersender/hypersender-laravel`
+4. Start sending messages!
+
+## What's Next
+
+We're actively developing the SDK. Found a bug or have a feature request? [Open an issue on GitHub](https://github.com/hypersender/hypersender-laravel).
+
+Happy coding!

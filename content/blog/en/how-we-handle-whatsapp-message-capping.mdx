@@ -1,0 +1,53 @@
+export const post = {
+  "title": "WhatsApp Message Capping: What It Means and How We Handle It",
+  "description": "WhatsApp message capping limits how many new contacts you can message per cycle. Here is how Hypersender shows your quota, notifies you, and returns clear API errors.",
+  "date": "2026-08-15",
+  "author": "Hypersender",
+  "category": "Product updates",
+  "image": "/Images/blog/how-we-handle-whatsapp-message-capping.png",
+  "imageAlt": "Concentric rings of soft green light expanding from the center"
+};
+
+We added message capping detection to Hypersender so you can see your quota before you hit it, and know the moment new-chat messages get blocked.
+
+## What is message capping
+
+WhatsApp message capping is a quota on how many new contacts a number can message in a cycle. A new contact is a number with no existing chat history.
+
+There are four statuses. `NONE` means no cap. `FIRST_WARNING` and `SECOND_WARNING` mean you are approaching the quota. `CAPPED` means you reached it and new-chat messages are blocked until the cycle resets.
+
+When you are capped, messages to new contacts fail. Existing conversations keep working. Your instance stays connected. You do not need to scan a QR code again.
+
+Hypersender cannot remove or reset the cap. Only Meta controls that.
+
+## What you see in your dashboard
+
+When a cap is active, your connection page shows a progress bar with the used and total quota. It shows the percentage, the raw numbers (like "640 of 1,000 messages"), and the time left until the quota resets.
+
+The bar color changes as you get closer. Amber for the first warning, orange for the second, red when you are capped.
+
+We also send you an email when the status changes. One per status level per cycle, so we do not spam you.
+
+## What your API calls see
+
+If your app tries to message a new contact while the account is capped, the API returns HTTP 423 with the reset time:
+
+```json
+{
+	"message": "Meta has capped this instance's new-chat messages for the current cycle. Hypersender cannot override this. The quota resets in 12 days, 4 hours. You can send to numbers with an existing conversation, or use a different instance."
+}
+```
+
+Compare that to a normal send. When everything is fine you get the message ID back. When the cap is active you get an actionable error instead of a cryptic failure. Your code can show that to users, queue the message, or switch to a backup instance.
+
+## What to do
+
+Keep messaging your existing contacts. Those still work.
+
+If you need to reach new people now, use a different instance. Many users keep a backup number ready.
+
+Let the cycle reset. Restarting or re-pairing your instance does not clear the cap.
+
+Review your volume. Our guides on [avoiding WhatsApp restrictions](https://docs.hypersender.com/v2/hypersender/overview/whatsapp/avoid-getting-blocked) and [WhatsApp message capping](https://docs.hypersender.com/v2/hypersender/overview/whatsapp/whatsapp-message-capping) cover the details.
+
+Message capping is a volume limit, not a ban. When you know the quota and the reset time, you can plan around it instead of guessing why sends fail. Log in to your [Hypersender dashboard](https://app.hypersender.com) to check your quota.

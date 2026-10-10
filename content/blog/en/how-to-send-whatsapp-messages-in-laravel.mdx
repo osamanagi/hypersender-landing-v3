@@ -1,0 +1,341 @@
+export const post = {
+  "title": "How to Send WhatsApp Messages in Laravel",
+  "description": "Learn how to integrate WhatsApp messaging into your Laravel application using the Hypersender SDK.",
+  "date": "2025-12-11",
+  "author": "Hypersender",
+  "category": "Developer guides",
+  "image": "/Images/blog/how-to-send-whatsapp-messages-in-laravel.png",
+  "imageAlt": "Vertical waves of green light flowing over a dark background"
+};
+
+Need to send WhatsApp messages from your Laravel app? This guide shows you how to do it using the Hypersender Laravel SDK.
+
+## What You'll Need
+
+Before getting started, you need:
+- A Laravel application (8.x or higher)
+- PHP 8.2+
+- A Hypersender account ([sign up here](https://app.hypersender.com/))
+- Your API key and Instance ID from the Hypersender dashboard
+
+## Installation
+
+Install the Hypersender SDK via Composer:
+
+```bash
+composer require hypersender/hypersender-laravel
+```
+
+Publish the config file:
+
+```bash
+php artisan vendor:publish --tag=hypersender-config
+```
+
+Add your credentials to your `.env` file:
+
+```env
+HYPERSENDER_WHATSAPP_API_KEY=your_api_key
+HYPERSENDER_WHATSAPP_INSTANCE_ID=your_instance_id
+```
+
+You can find your API key and Instance ID in your Hypersender dashboard under Settings.
+
+## Sending Your First Message
+
+Here's the simplest way to send a WhatsApp message:
+
+```php
+use Hypersender\Hypersender;
+
+Hypersender::whatsapp()
+    ->safeSendTextMessage(
+        chat_id: '20123456789@c.us',
+        text: 'Hello from Laravel!'
+    );
+```
+
+The `chat_id` format is the phone number (with country code) followed by `@c.us`. For example, a US number `+1 (202) 555-0123` becomes `12025550123@c.us`.
+
+### Why Use safeSendTextMessage?
+
+The `safeSendTextMessage` method adds human-like timing between messages. This is important because WhatsApp can flag accounts that send messages too quickly. If you're building a chatbot or notification system, always use the safe method.
+
+## Sending Different Message Types
+
+### Images
+
+```php
+Hypersender::whatsapp()
+    ->sendImageUrl(
+        chat_id: '20123456789@c.us',
+        url: 'https://example.com/image.jpg',
+        caption: 'Check this out!'
+    );
+```
+
+Or upload from your Laravel storage:
+
+```php
+use Illuminate\Support\Facades\Storage;
+
+$filePath = Storage::path('images/photo.jpg');
+
+Hypersender::whatsapp()
+    ->sendImageUpload(
+        chat_id: '20123456789@c.us',
+        filePath: $filePath,
+        caption: 'Photo from our app'
+    );
+```
+
+### Videos
+
+```php
+Hypersender::whatsapp()
+    ->sendVideoUrl(
+        chat_id: '20123456789@c.us',
+        url: 'https://example.com/video.mp4',
+        caption: 'Tutorial video'
+    );
+```
+
+### Documents
+
+```php
+Hypersender::whatsapp()
+    ->sendFileUrl(
+        chatId: '20123456789@c.us',
+        url: 'https://example.com/invoice.pdf',
+        fileName: 'invoice.pdf',
+        mimeType: 'application/pdf',
+        caption: 'Your invoice'
+    );
+```
+
+### Location
+
+```php
+Hypersender::whatsapp()
+    ->sendLocation(
+        chat_id: '20123456789@c.us',
+        latitude: '37.7749',
+        longitude: '-122.4194',
+        title: 'Our Office'
+    );
+```
+
+## Real-World Example: Order Notifications
+
+Here's how to send order confirmations using Laravel's notification system:
+
+First, create a notification class:
+
+```bash
+php artisan make:notification OrderConfirmed
+```
+
+Then implement the notification:
+
+```php
+namespace App\Notifications;
+
+use App\Models\Order;
+use Illuminate\Bus\Queueable;
+use Illuminate\Notifications\Notification;
+use Hypersender\Notifications\WhatsappChannel;
+use Hypersender\Notifications\WhatsappMessage;
+
+class OrderConfirmed extends Notification
+{
+    use Queueable;
+
+    public function __construct(
+        public Order $order
+    ) {}
+
+    public function via($notifiable): array
+    {
+        return [WhatsappChannel::class];
+    }
+
+    public function toWhatsapp($notifiable): WhatsappMessage
+    {
+        $message = "Hi {$notifiable->name}!\n\n";
+        $message .= "Your order #{$this->order->id} has been confirmed.\n\n";
+        $message .= "Items:\n";
+
+        foreach ($this->order->items as $item) {
+            $message .= "• {$item->name} (x{$item->quantity})\n";
+        }
+
+        $message .= "\nTotal: \${$this->order->total}\n";
+        $message .= "Estimated delivery: {$this->order->delivery_date}";
+
+        return WhatsappMessage::create()
+            ->text($message);
+    }
+}
+```
+
+Add the `routeNotificationForWhatsapp` method to your User model:
+
+```php
+namespace App\Models;
+
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+
+class User extends Authenticatable
+{
+    use Notifiable;
+
+    public function routeNotificationForWhatsapp(): string
+    {
+        // Format: phone number with country code + @c.us
+        $phone = preg_replace('/[^0-9]/', '', $this->phone);
+        return $phone . '@c.us';
+    }
+}
+```
+
+Now send notifications from your controller:
+
+```php
+use App\Notifications\OrderConfirmed;
+
+class OrderController extends Controller
+{
+    public function store(Request $request)
+    {
+        $order = Order::create($request->validated());
+
+        // Send WhatsApp notification
+        $request->user()->notify(new OrderConfirmed($order));
+
+        return redirect()->route('orders.show', $order);
+    }
+}
+```
+
+You can also send to any user:
+
+```php
+use App\Models\User;
+use App\Notifications\OrderConfirmed;
+
+$user = User::find(1);
+$user->notify(new OrderConfirmed($order));
+```
+
+Or use on-demand notifications for guests:
+
+```php
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\OrderConfirmed;
+
+Notification::route('whatsapp', '12025550123@c.us')
+    ->notify(new OrderConfirmed($order));
+```
+
+## Using Queues for Better Performance
+
+Sending messages synchronously can slow down your app. Use Laravel queues to send messages in the background:
+
+```php
+namespace App\Jobs;
+
+use Hypersender\Hypersender;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+
+class SendWhatsAppMessage implements ShouldQueue
+{
+    use Dispatchable, InteractsWithQueue, Queueable;
+
+    public function __construct(
+        public string $chatId,
+        public string $message
+    ) {}
+
+    public function handle(): void
+    {
+        Hypersender::whatsapp()
+            ->safeSendTextMessage(
+                chat_id: $this->chatId,
+                text: $this->message
+            );
+    }
+}
+```
+
+Dispatch the job:
+
+```php
+SendWhatsAppMessage::dispatch($chatId, $message);
+```
+
+## Handling Incoming Messages
+
+The SDK automatically sets up a webhook route for incoming messages. Listen for events in your `EventServiceProvider`:
+
+```php
+use Hypersender\Events\Whatsapp\MessagesAny;
+
+protected $listen = [
+    MessagesAny::class => [
+        HandleIncomingWhatsAppMessage::class,
+    ],
+];
+```
+
+Create the listener:
+
+```php
+namespace App\Listeners;
+
+use Hypersender\Events\Whatsapp\MessagesAny;
+use Illuminate\Support\Facades\Log;
+
+class HandleIncomingWhatsAppMessage
+{
+    public function handle(MessagesAny $event): void
+    {
+        $message = $event->payload;
+
+        Log::info('Received WhatsApp message', [
+            'from' => $message['key']['remoteJid'],
+            'text' => $message['message']['conversation'] ?? null,
+        ]);
+
+        // Add your logic here
+        // Reply to the message, save to database, etc.
+    }
+}
+```
+
+## Common Issues
+
+### Messages Not Sending
+
+Make sure your WhatsApp number is connected in the Hypersender dashboard. You need to scan the QR code before you can send messages.
+
+### Invalid Chat ID Format
+
+The chat ID must be in the format `phonenumber@c.us`. Don't include the `+` sign or any spaces. Just digits followed by `@c.us`.
+
+### Rate Limiting
+
+WhatsApp has rate limits. Use `safeSendTextMessage` and avoid sending too many messages at once. If you need to send bulk messages, add delays between them.
+
+## Next Steps
+
+Now that you know the basics, you can:
+
+- Set up [webhook handling](https://docs.hypersender.com/v2/packages-and-sdks/laravel/whatsapp/webhook-handling) for two-way conversations
+- Learn about [queued requests](https://docs.hypersender.com/v2/packages-and-sdks/laravel/whatsapp/queued-requests) for tracking message status
+- Explore the [full API documentation](https://docs.hypersender.com/v2/packages-and-sdks/laravel/whatsapp/send-messages)
+
+The complete SDK documentation is available at [docs.hypersender.com](https://docs.hypersender.com/v2/packages-and-sdks/laravel/installation).

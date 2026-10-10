@@ -1,0 +1,73 @@
+export const post = {
+  "title": "WhatsApp Timelock: What It Means and How We Handle It",
+  "description": "Meta can temporarily restrict your WhatsApp number from messaging new contacts. Here is how Hypersender detects these restrictions and keeps you informed.",
+  "date": "2026-07-20",
+  "author": "Hypersender",
+  "category": "Product updates",
+  "image": "/Images/blog/how-we-handle-whatsapp-timelock-restrictions.png",
+  "imageAlt": "Green lines converging on a single bright point in the dark"
+};
+
+We added timelock detection to Hypersender so you know the moment Meta restricts your instance and exactly when the restriction ends.
+
+## What is a timelock
+
+Meta can temporarily restrict your WhatsApp number from messaging new contacts. This is called a timelock. Existing conversations keep working. The restriction lifts on its own after a set period.
+
+There are two levels. The lighter one restricts new contacts only. Your instance stays connected and existing chats work fine. The heavier one disconnects your session entirely. You need to scan a new QR code after the restriction ends before you can send anything again.
+
+Hypersender cannot remove or shorten a timelock. Only Meta controls that.
+
+## What you see in your dashboard
+
+When your instance gets hit with a timelock, a warning banner shows up on the connection page. It tells you the type of restriction, how much time is left (like "2 days, 5 hours remaining"), the exact date and time it expires, and whether you will need to scan a QR code.
+
+We also send you an email. One per day at most while the restriction is active.
+
+## What your API calls see
+
+If your app tries to send a message to a new contact during a timelock, the API returns HTTP 423 with the remaining restriction time:
+
+```json
+{
+	"message": "Meta has placed a temporary restriction on this instance, restricting messages to new contacts. Hypersender cannot override this. The restriction ends in 2 days, 5 hours. You can send to numbers with an existing conversation, or use a different instance."
+}
+```
+
+Compare that to a normal send. When everything is fine you get the message ID back. When a timelock is active you get an actionable error instead of a cryptic failure. Your code can show that to users, queue the message, or switch to a backup instance.
+
+We also track disconnect reasons in your instance history. When Meta forces a logout because of a timelock, you see that recorded. Not a subscription issue, not a server problem. Meta.
+
+## The "could not resolve recipient" error
+
+You might have seen this error and assumed the phone number does not exist on WhatsApp. Sometimes that is true. But it can also happen because your instance is under a timelock and Meta refuses to resolve new contacts.
+
+Hypersender now tells you which case it is. When the error is tied to an active timelock, the API response includes the remaining time:
+
+```json
+{
+	"message": "WhatsApp could not resolve this recipient. The number may not exist, may not be reachable, or the instance may be under a Meta restriction ending in 3 days. Try sending to a number with an open conversation, or use a different instance."
+}
+```
+
+Without an active timelock the same error looks like this:
+
+```json
+{
+	"message": "WhatsApp could not resolve this recipient. The number may not exist, may not be reachable, or the instance may be under a Meta restriction. Try sending to a number with an open conversation, or use a different instance."
+}
+```
+
+The difference tells you whether the issue is the number itself or the restriction on your instance.
+
+## What to do
+
+Keep messaging your existing contacts. Those still work.
+
+If you need to reach new people urgently, use a different instance. Many users keep a backup number ready.
+
+Let the restriction expire. Trying to bypass it can make things worse.
+
+Review your sending patterns. Our guides on [avoiding WhatsApp restrictions](https://docs.hypersender.com/v2/hypersender/overview/whatsapp/avoid-getting-blocked) and [warming up numbers](https://docs.hypersender.com/v2/hypersender/overview/whatsapp/warm-up-your-whatsapp-number) cover the fundamentals.
+
+Timelocks are temporary, not bans. The difference between a small annoyance and a real problem is knowing what is happening. Now you do.
