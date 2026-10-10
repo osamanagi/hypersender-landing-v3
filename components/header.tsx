@@ -74,10 +74,21 @@ export function Header({ dict, locale }: { dict: Dictionary; locale: Locale }) {
 					</div>
 					<LocaleSwitcher label={dict.locale.label} locale={locale} />
 					<ThemeToggle labels={dict.theme} />
-					<Button size="sm" variant="outline">
+					<Button
+						nativeButton={false}
+						render={<a href="https://app.hypersender.com/login" />}
+						size="sm"
+						variant="outline"
+					>
 						{dict.header.signIn}
 					</Button>
-					<Button size="sm">{dict.header.getStarted}</Button>
+					<Button
+						nativeButton={false}
+						render={<a href={getNavHref("#pricing", locale)} />}
+						size="sm"
+					>
+						{dict.header.getStarted}
+					</Button>
 				</div>
 				<div className="flex items-center gap-2 md:hidden">
 					<LocaleSwitcher

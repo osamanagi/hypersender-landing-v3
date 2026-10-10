@@ -19,8 +19,23 @@ export function CallToAction({ dict }: { dict: Dictionary }) {
 			</p>
 
 			<div className="flex items-center justify-center gap-2">
-				<Button variant="outline">{dict.ctaSection.contactSales}</Button>
-				<Button>
+				<Button
+					nativeButton={false}
+					render={
+						<a
+							href="https://wa.me/201065684630"
+							rel="noreferrer"
+							target="_blank"
+						/>
+					}
+					variant="outline"
+				>
+					{dict.ctaSection.contactSales}
+				</Button>
+				<Button
+					nativeButton={false}
+					render={<a href="https://app.hypersender.com/subscriptions/new?type=1" />}
+				>
 					{dict.ctaSection.getStarted}{" "}
 					<ArrowRightIcon data-icon="inline-end" />
 				</Button>

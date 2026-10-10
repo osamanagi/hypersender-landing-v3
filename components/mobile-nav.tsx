@@ -58,10 +58,21 @@ export function MobileNav({ dict, locale }: { dict: Dictionary; locale: Locale }
 							))}
 						</div>
 						<div className="mt-12 flex flex-col gap-2">
-							<Button className="w-full" variant="outline">
+							<Button
+								className="w-full"
+								nativeButton={false}
+								render={<a href="https://app.hypersender.com/login" />}
+								variant="outline"
+							>
 								{dict.header.signIn}
 							</Button>
-							<Button className="w-full">{dict.header.getStarted}</Button>
+							<Button
+								className="w-full"
+								nativeButton={false}
+								render={<a href={getNavHref("#pricing", locale)} />}
+							>
+								{dict.header.getStarted}
+							</Button>
 						</div>
 					</div>
 				</Portal>

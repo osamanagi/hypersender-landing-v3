@@ -165,7 +165,11 @@ export function PricingCard({
 			? Math.round(((price.monthly - price.yearly) / price.monthly) * 100)
 			: null;
 
-	const href = `${plan.href}&is_yearly=${frequency === "yearly"}`;
+	// Only the subscription URLs carry the period flag — the enterprise tier links to wa.me, which has no
+	// query string, so appending `&is_yearly=…` there would corrupt the phone number.
+	const href = plan.href.includes("?")
+		? `${plan.href}&is_yearly=${frequency === "yearly"}`
+		: plan.href;
 
 	return (
 		<div

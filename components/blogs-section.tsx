@@ -19,18 +19,19 @@ export function BlogsSection({ posts, locale }: { posts: BlogSummary[]; locale: 
       </div>
       <div className="relative"><FullWidthDivider contained /></div>
       <div className="grid gap-2 p-2 sm:p-4 md:grid-cols-2 lg:grid-cols-3">
-        {posts.map((post) => <BlogCard key={post.slug} post={post} locale={locale} />)}
+        {posts.map((post, index) => <BlogCard eager={index < 3} key={post.slug} post={post} locale={locale} />)}
       </div>
     </section>
   );
 }
 
-export function BlogCard({ post, locale }: { post: BlogSummary; locale: Locale }) {
+// `eager` is for the first row of the index grid; those covers are the LCP element and must not be lazy.
+export function BlogCard({ post, locale, eager = false }: { post: BlogSummary; locale: Locale; eager?: boolean }) {
   const t = blogLabels[locale];
   return (
     <Link href={`/${locale}/blog/${post.slug}`} className="group flex min-w-0 flex-col gap-5 rounded-md p-3 transition-colors hover:bg-muted/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring active:bg-muted">
       <div className="relative aspect-video overflow-hidden rounded-md bg-muted shadow-md outline outline-offset-3 outline-border/50">
-        <Image src={post.image} alt={post.imageAlt} fill sizes="(min-width: 1024px) 310px, (min-width: 768px) 46vw, 90vw" className="object-cover transition-transform duration-500 motion-safe:group-hover:scale-105" />
+        <Image src={post.image} alt={post.imageAlt} fill loading={eager ? "eager" : "lazy"} sizes="(min-width: 1024px) 310px, (min-width: 768px) 46vw, 90vw" className="object-cover transition-transform duration-500 motion-safe:group-hover:scale-105" />
       </div>
       <div className="flex flex-col gap-3 px-1 pb-2">
         <p className="text-xs font-medium text-muted-foreground">{post.category}</p>

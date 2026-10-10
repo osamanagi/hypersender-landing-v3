@@ -130,6 +130,19 @@
   body {
     @apply bg-background text-foreground;
   }
+  /* Smooth scrolling for in-page anchors (#features, #otp, #pricing, ...). Deliberately NOT disabled
+     under `prefers-reduced-motion`: smooth anchor scrolling is part of how this page navigates. */
+  html {
+    scroll-behavior: smooth;
+  }
+  /* Keep anchor targets clear of the sticky header. */
+  #features,
+  #otp,
+  #pricing,
+  #laravel-sdk,
+  #faqs {
+    scroll-margin-top: 5rem;
+  }
 }
 
 /* Article styles use the site's tokens, including in dark mode and RTL. */

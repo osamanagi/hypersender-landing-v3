@@ -37,7 +37,7 @@ export function HeroSection({
 						"group mx-auto flex w-fit items-center gap-3 rounded-sm border bg-card p-1 shadow",
 						"fade-in slide-in-from-bottom-10 animate-in fill-mode-backwards transition-all delay-500 duration-500 ease-out"
 					)}
-					href="#link"
+					href="#otp"
 				>
 					<div className="rounded-xs border bg-card px-1.5 py-0.5 shadow-sm">
 						<p className="font-mono text-xs">{dict.hero.badge}</p>
@@ -72,8 +72,17 @@ export function HeroSection({
 				</p>
 
 				<div className="fade-in slide-in-from-bottom-10 flex w-fit animate-in items-center justify-center gap-3 fill-mode-backwards pt-2 delay-300 duration-500 ease-out">
-					<Button variant="outline">{dict.hero.features}</Button>
-					<Button>
+					<Button
+						nativeButton={false}
+						render={<a href="#features" />}
+						variant="outline"
+					>
+						{dict.hero.features}
+					</Button>
+					<Button
+						nativeButton={false}
+						render={<a href="https://app.hypersender.com/subscriptions/new?type=1" />}
+					>
 						{dict.hero.getStarted}{" "}
 						<ArrowRightIcon className="rtl:rotate-180" data-icon="inline-end" />
 					</Button>
